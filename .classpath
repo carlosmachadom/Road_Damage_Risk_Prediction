@@ -6,7 +6,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/PC/Desktop/Java dev/Proyecto_Final_Logica_Difusa/lib/jFuzzyLogic.jar"/>
-	<classpathentry kind="lib" path="C:/Users/PC/Desktop/Java dev/Proyecto_Final_Logica_Difusa/lib/jFuzzyLogic_core.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JFuzzyLogic">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
