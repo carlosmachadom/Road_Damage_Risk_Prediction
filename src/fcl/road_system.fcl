@@ -1,14 +1,13 @@
 FUNCTION_BLOCK road_damage_prediction
 
 VAR_INPUT
-    trafico : REAL;
-    peso_vehiculos : REAL;
-	
-    humedad : REAL;
+	tipo_carretera : REAL;
+    tipo_vehiculo : REAL;	
+    humedad_suelo : REAL;
     precipitacion : REAL;
 	temperatura : REAL;
-	
-    calidadMateriales : REAL;
+	condiciones_ambientales : REAL;		
+    tipo_material : REAL;    
 END_VAR
 
 VAR_OUTPUT
