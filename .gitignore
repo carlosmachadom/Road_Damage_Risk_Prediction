@@ -1,1 +1,17 @@
+<<<<<<< HEAD
 /bin/
+=======
+# Building
+bin/
+lib/
+out/
+
+# Editor config
+.idea/
+.project
+.config
+.settings/
+.classpath
+Sistema_Difuso_Prediccion_Deterioro_Carreteras.iml
+
+>>>>>>> branch 'main' of https://github.com/carlosmachadom/Sistema_Difuso_Prediccion_Deterioro_Carreteras.git
