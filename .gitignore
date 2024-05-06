@@ -1,2 +1,11 @@
-/bin/
-/lib/
+# Building
+bin/
+lib/
+out/
+
+# Editor config
+.idea/
+.project
+.config
+Sistema_Difuso_Prediccion_Deterioro_Carreteras.iml
+

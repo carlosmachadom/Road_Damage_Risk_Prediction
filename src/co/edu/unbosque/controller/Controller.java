@@ -1,6 +1,3 @@
-/**
- * 
- */
 package co.edu.unbosque.controller;
 
 import java.awt.event.ActionEvent;
