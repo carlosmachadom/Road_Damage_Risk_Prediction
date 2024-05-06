@@ -1,5 +1,7 @@
 package co.edu.unbosque.view;
 
-public class VistaVentana {
+import javax.swing.JFrame;
+
+public class VistaVentana extends JFrame {
 
 }

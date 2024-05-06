@@ -1,0 +1,70 @@
+FUNCTION_BLOCK road_damage_prediction
+
+VAR_INPUT
+	tipo_carretera : REAL;
+    tipo_vehiculo : REAL;	
+    humedad_suelo : REAL;
+    precipitacion : REAL;
+	temperatura : REAL;
+	condiciones_ambientales : REAL;		
+    tipo_material : REAL;    
+END_VAR
+
+VAR_OUTPUT
+    riesgo_de_alto_deterioro : REAL;
+END_VAR
+
+
+FUZZIFY trafico 
+	// Cantidad de vehiculos que pasan por día/hora
+	// Hora máxima de tráfico
+	// Ubicación de la carretera
+	
+	// Filtro: Tipo de calle (principal, urbana y carretera)
+	
+    TERM poco := (100, 1) (900, 1) (1500, 0); 
+    TERM moderado := (1350, 0) (2200,1) (3500,0);
+    TERM pesado := (3200, 0) (4300, 1) (6700,1);
+END_FUZZIFY
+
+FUZZIFY peso_vehiculos
+	// Toneladas
+	// Tipo de vehiculos que pasan por la carretera
+	
+    TERM ligero := (1, 1) (2, 1) (3.5, 0); 
+    TERM moderado := (3,0) (8, 1) (16,0);
+    TERM pesado := (16, 0) (32, 1) (52, 1);
+END_FUZZIFY
+
+FUZZIFY humedad // Porcentaje de humedad
+    TERM seco := (0, 1) (10, 1) (20, 1) (30, 0); 
+    TERM moderadamente_seco := (20,0) (30, 1) (40,1) (50,0);
+    TERM humedo := (50, 0) (60, 1) (70, 1) (80, 0);
+    TERM extremadamente_humedo := (70, 0) (80, 1) (90,1) (100, 1);
+END_FUZZIFY
+
+FUZZIFY precipitacion // Milimetros de lluvia
+    TERM baja := (0, 1) (125, 1) (250, 1) (335, 0.5) (500, 0); 
+    TERM moderada := (400,0) (600, 1) (800,1) (1000,1) (1200, 0);
+    TERM alta := (1000, 0) (1400, 1) (2000, 1) (2500, 1) (3000, 1);
+END_FUZZIFY
+
+DEFUZZIFY riesgo_de_alto_deterioro  
+    TERM bajo := (0,0) (16,1) (33,0);
+    TERM promedio := (30,0) (45,1) (66,0);
+    TERM alto := (60,0) (85,1) (100,0);
+    METHOD : COG;
+    DEFAULT := 0;
+END_DEFUZZIFY
+
+//RULEBLOCK No1
+    //AND : MIN;            // Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)
+    //ACT : MIN;            // Use 'min' activation method
+    //ACCU : MAX;            // Use 'max' accumulation method
+
+    //RULE 1 : IF service IS poor OR food IS rancid THEN tip IS cheap;
+    //RULE 2 : IF service IS good THEN tip IS average; 
+    //RULE 3 : IF service IS excellent AND food IS delicious THEN tip IS generous;
+//END_RULEBLOCK
+
+END_FUNCTION_BLOCK
