@@ -24,7 +24,14 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class Inicio extends JPanel {
 
+	/**
+	 * Boton de iniciopara diagnostico
+	 */
     private JButton botonInicio;
+    
+    /**
+     * Boton para la pantalla de información del proyecto
+     */
     private JButton botonInformacion;
 
     /**
@@ -46,6 +53,7 @@ public class Inicio extends JPanel {
     public void inicializarComponentes() {
         insertarTitulo(); // Inserta el título en la parte superior del panel
         insertarBotones(); // Inserta los botones en la parte central del panel
+        insertarPieDePagina(); // Inserta el pie de página de la pantalla de inicio
     }
 
     /**
@@ -86,8 +94,7 @@ public class Inicio extends JPanel {
     public void insertarBotones() {
         JPanel contenedorBotones = new JPanel(new BorderLayout());
         contenedorBotones.setBackground(new Color(255, 255, 255, 0)); // Fondo transparente
-        Border margen = BorderFactory.createEmptyBorder(0, 40, 40, 40);
-        contenedorBotones.setBorder(margen);
+        contenedorBotones.setBorder(new EmptyBorder(0, 40, 40, 40));
 
         JPanel seccionPrincipal = new JPanel();
         seccionPrincipal.setLayout(new BoxLayout(seccionPrincipal, BoxLayout.X_AXIS)); // Layout horizontal
@@ -122,6 +129,25 @@ public class Inicio extends JPanel {
         contenedorBotones.add(seccionPrincipal, BorderLayout.NORTH);
         add(contenedorBotones, BorderLayout.CENTER); // Agrega el contenedor de botones en el centro
     }
+    
+    /**
+     * Inserta el pie de página de la aplicación en la parte inferior del layout principal.
+     * Se presenta la información de proyecto de la Universidad el Bosque.
+     */
+    public void insertarPieDePagina() {
+    	JPanel piePagina = new JPanel();
+    	piePagina.setBackground(new Color(242, 97, 63));
+    	piePagina.setBorder(new EmptyBorder(24,12,24,12));
+    	
+    	JLabel textoPiePagina = new JLabel("Universidad el Bosque. 2024");
+    	Font fontTextoPiePagina = new Font("Arial", Font.BOLD, 24);
+    	textoPiePagina.setFont(fontTextoPiePagina);
+    	textoPiePagina.setForeground(new Color(252, 255, 218));
+    	
+    	piePagina.add(textoPiePagina);
+    	
+    	add(piePagina, BorderLayout.SOUTH);
+    }
 
     /**
      * Override del método paint para dibujar una imagen de fondo en el panel.
@@ -137,21 +163,19 @@ public class Inicio extends JPanel {
         super.paint(g); // Llama al método paint de la superclase JPanel
     }
 
-    // Getters y setters para los botones del panel de inicio
-
+    /**
+     * Getter para boton de inicio de diagnostico
+     * @return botonInicio retorna el botón para inicio del diagnostico
+     */
     public JButton getBotonInicio() {
         return botonInicio;
     }
 
-    public void setBotonInicio(JButton botonInicio) {
-        this.botonInicio = botonInicio;
-    }
-
+    /**
+     * Getter para botonInformación
+     * @return botonInformacion retorna el boton que lleva a la pantallá de información del proyecto
+     */
 	public JButton getBotonInformacion() {
 		return botonInformacion;
-	}
-
-	public void setBotonInformacion(JButton botonInformacion) {
-		this.botonInformacion = botonInformacion;
 	}
 }

@@ -34,6 +34,10 @@ public class Controller implements ActionListener{
 	}
 	
 	public void validarAccion(String command) {
-		
+		switch (command) {
+		case "inicia_diagnostico":
+			// Iniciar objeto para almacenar información
+			vista.getLayoutPrincipal().insertarFormularioUno();		
+		}
 	}	
 }

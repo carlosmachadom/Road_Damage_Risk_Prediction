@@ -52,6 +52,8 @@ public class LayoutPrincipal extends JPanel{
 		repintarRevalidarPanel();
 		
 		// Agregar formulario 1
+		formularioUno = new FormularioUnoTipoCarretera();
+		add(formularioUno);
 		
 		repintarRevalidarPanel();
 	}
