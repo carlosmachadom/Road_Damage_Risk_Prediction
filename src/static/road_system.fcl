@@ -1,13 +1,9 @@
 FUNCTION_BLOCK road_damage_prediction
 
 VAR_INPUT
-	tipo_carretera : REAL;
-    tipo_vehiculo : REAL;	
     humedad_suelo : REAL;
-    precipitacion : REAL;
-	temperatura : REAL;
-	condiciones_ambientales : REAL;		
-    tipo_material : REAL;    
+    condiciones_ambientales : REAL;
+	trafico : REAL;
 END_VAR
 
 VAR_OUTPUT
@@ -16,37 +12,22 @@ END_VAR
 
 
 FUZZIFY trafico 
-	// Cantidad de vehiculos que pasan por día/hora
-	// Hora máxima de tráfico
-	// Ubicación de la carretera
-	
-	// Filtro: Tipo de calle (principal, urbana y carretera)
-	
-    TERM poco := (100, 1) (900, 1) (1500, 0); 
-    TERM moderado := (1350, 0) (2200,1) (3500,0);
-    TERM pesado := (3200, 0) (4300, 1) (6700,1);
+    TERM bajo := (100, 1) (900, 1) (1500, 0); 
+    TERM medio := (1350, 0) (2200,1) (3500,0);
+    TERM alto := (3200, 0) (4300, 1) (6700,1);
 END_FUZZIFY
 
-FUZZIFY peso_vehiculos
-	// Toneladas
-	// Tipo de vehiculos que pasan por la carretera
-	
-    TERM ligero := (1, 1) (2, 1) (3.5, 0); 
-    TERM moderado := (3,0) (8, 1) (16,0);
-    TERM pesado := (16, 0) (32, 1) (52, 1);
+FUZZIFY condiciones_ambientales 
+    TERM buenas := (100, 1) (900, 1) (1500, 0); 
+    TERM regulares := (1350, 0) (2200,1) (3500,0);
+    TERM malas := (3200, 0) (4300, 1) (6700,1);
 END_FUZZIFY
 
-FUZZIFY humedad // Porcentaje de humedad
-    TERM seco := (0, 1) (10, 1) (20, 1) (30, 0); 
+FUZZIFY humedad_suelo 
+    TERM seco := (0, 1) (10, 1) (20, 1) (25, 0); 
     TERM moderadamente_seco := (20,0) (30, 1) (40,1) (50,0);
-    TERM humedo := (50, 0) (60, 1) (70, 1) (80, 0);
-    TERM extremadamente_humedo := (70, 0) (80, 1) (90,1) (100, 1);
-END_FUZZIFY
-
-FUZZIFY precipitacion // Milimetros de lluvia
-    TERM baja := (0, 1) (125, 1) (250, 1) (335, 0.5) (500, 0); 
-    TERM moderada := (400,0) (600, 1) (800,1) (1000,1) (1200, 0);
-    TERM alta := (1000, 0) (1400, 1) (2000, 1) (2500, 1) (3000, 1);
+    TERM humedo := (40, 0) (50, 1) (60, 1) (70, 0);
+    TERM extremadamente_humedo := (65, 0) (70, 1) (80,1) (100, 1);
 END_FUZZIFY
 
 DEFUZZIFY riesgo_de_alto_deterioro  
