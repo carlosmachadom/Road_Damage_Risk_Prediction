@@ -16,7 +16,7 @@ public class Controller implements ActionListener {
     public Controller() {
         fuzzyVariablesDAO = new FuzzyVariablesDAO();
         vista = new VistaVentana();
-		    funcionar();
+        funcionar();
         run();
     }
 
