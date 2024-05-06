@@ -1,14 +1,22 @@
 package co.edu.unbosque.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import co.edu.unbosque.view.VistaVentana;
 import co.edu.unbosque.DAO.FuzzyVariablesDAO;
 import co.edu.unbosque.DTO.FuzzyInputDTO;
 
-public class Controller {
+public class Controller implements ActionListener {
+    
+    public VistaVentana vista;
 
     private final FuzzyVariablesDAO fuzzyVariablesDAO;
 
     public Controller() {
         fuzzyVariablesDAO = new FuzzyVariablesDAO();
+        vista = new VistaVentana();
+		    funcionar();
         run();
     }
 
@@ -33,5 +41,25 @@ public class Controller {
         System.out.println(i.getkey() + " <=> " + i.getValue());
         System.out.println(j.getkey() + " <=> " + j.getValue());
     }
-
+  
+    private void funcionar() {
+		    asignarOyentes();
+	  }
+  
+    public void asignarOyentes() {
+		    // Asignando oyentes de la pantalla de inicio
+		    vista.getLayoutPrincipal().getPantallaInicio().getBotonInicio().addActionListener(this);
+		    vista.getLayoutPrincipal().getPantallaInicio().getBotonInformacion().addActionListener(this);
+	  }
+  
+    @Override
+	  public void actionPerformed(ActionEvent e) {
+		    // TODO Auto-generated method stub
+		    String comando = e.getActionCommand();
+		    validarAccion(comando);
+	  }
+	
+	  public void validarAccion(String command) {
+		  
+	  }
 }
