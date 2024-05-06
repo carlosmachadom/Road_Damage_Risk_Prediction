@@ -1,0 +1,44 @@
+FUNCTION_BLOCK road_damage_prediction
+
+VAR_INPUT
+    presipitacion : REAL;
+    temperatura : REAL;
+END_VAR
+
+VAR_OUTPUT
+    condiciones_ambientales : REAL;
+END_VAR
+
+
+FUZZIFY presipitacion 
+    TERM baja := (0, 1) (125, 1) (250, 1) (335, 0.5) (500, 0); 
+    TERM moderada := (400,0) (600, 1) (800,1) (1000,1) (1200, 0);
+    TERM alta := (1000, 0) (1400, 1) (2000, 1) (2500, 1) (3000, 1);
+END_FUZZIFY
+
+FUZZIFY temperatura 
+    TERM frio := (0, 1) (10, 1) (15, 0); 
+    TERM templado := (10,0) (17, 1) (25,0);
+    TERM calido := (20, 0) (27, 1) (35,0);
+    TERM muy_caliente := (30, 0) (35, 1) (50,1);
+END_FUZZIFY
+
+DEFUZZIFY condiciones_ambientales  
+    TERM bajo := (0,0) (16,1) (33,0);
+    TERM medio := (30,0) (45,1) (66,0);
+    TERM alto := (60,0) (85,1) (100,0);
+    METHOD : COG;
+    DEFAULT := 0;
+END_DEFUZZIFY
+
+//RULEBLOCK No1
+    //AND : MIN;            // Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)
+    //ACT : MIN;            // Use 'min' activation method
+    //ACCU : MAX;            // Use 'max' accumulation method
+
+    //RULE 1 : IF service IS poor OR food IS rancid THEN tip IS cheap;
+    //RULE 2 : IF service IS good THEN tip IS average; 
+    //RULE 3 : IF service IS excellent AND food IS delicious THEN tip IS generous;
+//END_RULEBLOCK
+
+END_FUNCTION_BLOCK
