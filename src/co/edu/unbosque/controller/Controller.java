@@ -17,7 +17,7 @@ public class Controller implements ActionListener {
         fuzzyVariablesDAO = new FuzzyVariablesDAO();
         vista = new VistaVentana();
         funcionar();
-        run();
+        //run();
     }
 
     private void run() {
@@ -50,6 +50,10 @@ public class Controller implements ActionListener {
 		    // Asignando oyentes de la pantalla de inicio
 		    vista.getLayoutPrincipal().getPantallaInicio().getBotonInicio().addActionListener(this);
 		    vista.getLayoutPrincipal().getPantallaInicio().getBotonInformacion().addActionListener(this);
+		    
+		    // Asignar oyentes en el formulario uno
+		    vista.getLayoutPrincipal().getFormularioUno().getBotonSiguiente().addActionListener(this);
+		    vista.getLayoutPrincipal().getFormularioUno().getBotonCancelar().addActionListener(this);
 	  }
   
     @Override
@@ -63,7 +67,17 @@ public class Controller implements ActionListener {
 		switch (command) {
 		case "inicia_diagnostico":
 			// Iniciar objeto para almacenar información
-			vista.getLayoutPrincipal().insertarFormularioUno();		
+			vista.getLayoutPrincipal().insertarFormularioUno();	
+			break;
+		case "Informacion_proyecto": 
+			// Llevar a pantalla de información de proyecto
+			break;
+		case "Siguiente_formulario_uno":
+			// Almacenar resultados de formulario uno en objeto de consulta
+			// Insertar formulario numero dos
+		case "Cancelar":
+			// LLevar a pagina de inicio 
+			// Reiniciar objeto de consulta
 		}
 	}	
 }

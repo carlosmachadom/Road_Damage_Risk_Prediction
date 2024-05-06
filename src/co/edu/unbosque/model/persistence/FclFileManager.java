@@ -6,7 +6,8 @@ import java.io.File;
 
 public class FclFileManager {
 
-    private final File file = new File("static" + File.separator + "road_system.fcl");
+    //private final File file = new File("static" + File.separator + "road_system.fcl");
+	private final File file = new File("src\\static\\road_system.fcl");
 
     private FIS fis;
 

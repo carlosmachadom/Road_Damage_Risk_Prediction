@@ -22,13 +22,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
  * 
  */
+@SuppressWarnings("serial")
 public class FormularioUnoTipoCarretera extends JPanel {	
 	private JPanel contenedorFormulario;	
 	private JComboBox<String> tipoCarretera;
@@ -37,11 +37,11 @@ public class FormularioUnoTipoCarretera extends JPanel {
 	private JButton botonCancelar;
 	
 	public FormularioUnoTipoCarretera() {
-		setBorder(new EmptyBorder(0, 0, 0, 0)); // Establece un borde vacío para el panel
-        setPreferredSize(new Dimension(1440, 960)); // Establece las dimensiones preferidas del panel
-        setLayout(new BorderLayout()); // Utiliza BorderLayout como layout principal
-        inicializarComponentes(); // Inicializa los componentes del panel de inicio
-        setVisible(true); // Hace visible el panel
+		setBorder(new EmptyBorder(0, 0, 0, 0));
+        setPreferredSize(new Dimension(1440, 960));
+        setLayout(new BorderLayout());
+        inicializarComponentes();
+        setVisible(true);
 	}
 	
 	public void inicializarComponentes() {
@@ -183,7 +183,7 @@ public class FormularioUnoTipoCarretera extends JPanel {
         Font fontBotonInicio = new Font("Arial", Font.BOLD, 24);
         botonSiguiente.setFont(fontBotonInicio);
         botonSiguiente.setForeground(new Color(252, 255, 218));
-        botonSiguiente.setActionCommand("Cancelar");
+        botonSiguiente.setActionCommand("Siguiente_formulario_uno");
 
         contenedorBotones.add(botonCancelar);
         contenedorBotones.add(Box.createHorizontalStrut(16));
@@ -226,4 +226,20 @@ public class FormularioUnoTipoCarretera extends JPanel {
         setOpaque(false); // Hace el panel transparente
         super.paint(g); // Llama al método paint de la superclase JPanel
     }
+
+	public JComboBox<String> getTipoCarretera() {
+		return tipoCarretera;
+	}
+
+	public JComboBox<String> getMaterialCarretera() {
+		return materialCarretera;
+	}
+
+	public JButton getBotonSiguiente() {
+		return botonSiguiente;
+	}
+
+	public JButton getBotonCancelar() {
+		return botonCancelar;
+	}
 }
