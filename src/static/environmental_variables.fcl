@@ -11,9 +11,11 @@ END_VAR
 
 
 FUZZIFY presipitacion 
-    TERM baja := (0, 1) (125, 1) (250, 1) (335, 0.5) (500, 0); 
-    TERM moderada := (400,0) (600, 1) (800,1) (1000,1) (1200, 0);
-    TERM alta := (1000, 0) (1400, 1) (2000, 1) (2500, 1) (3000, 1);
+	TERM muy_baja := (0, 1) (90, 1) (150, 0) ; 
+    TERM baja := (100, 0) (250, 1) (500, 1) (700, 0); 
+    TERM moderada := (600,0) (750, 1) (1000,1) (1200, 0);
+    TERM alta := (1100, 0) (1250, 1) (1500, 1) (1600, 0) ;
+	TERM muy_alta := (1500, 0) (1600, 1) (2000, 1) (3000, 1) ;
 END_FUZZIFY
 
 FUZZIFY temperatura 
