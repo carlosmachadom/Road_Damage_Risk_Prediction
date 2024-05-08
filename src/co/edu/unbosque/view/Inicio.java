@@ -137,10 +137,10 @@ public class Inicio extends JPanel {
     public void insertarPieDePagina() {
     	JPanel piePagina = new JPanel();
     	piePagina.setBackground(new Color(242, 97, 63));
-    	piePagina.setBorder(new EmptyBorder(24,12,24,12));
+    	piePagina.setBorder(new EmptyBorder(12,12,12,12));
     	
     	JLabel textoPiePagina = new JLabel("Universidad el Bosque. 2024");
-    	Font fontTextoPiePagina = new Font("Arial", Font.BOLD, 24);
+    	Font fontTextoPiePagina = new Font("Arial", Font.BOLD, 18);
     	textoPiePagina.setFont(fontTextoPiePagina);
     	textoPiePagina.setForeground(new Color(252, 255, 218));
     	

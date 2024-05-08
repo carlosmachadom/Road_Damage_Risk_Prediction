@@ -53,7 +53,7 @@ public class FormularioUnoTipoCarretera extends JPanel {
 	public void insertarCabecera() {
 		JPanel header = new JPanel();
 		header.setBackground(new Color(242, 97, 63));
-		header.setBorder(new EmptyBorder(24,12,24,12));
+		header.setBorder(new EmptyBorder(12,12,12,12));
 		header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
     	
 		Font fuente = new Font("Arial", Font.BOLD, 24);
@@ -85,7 +85,7 @@ public class FormularioUnoTipoCarretera extends JPanel {
 		
 		insertarTitulo();
 		insertarCamposFormulario();
-		insertarBotonEnviar();
+		insertarBotones();
 		
 		add(contenedorFormulario, BorderLayout.CENTER);
 	}
@@ -157,7 +157,7 @@ public class FormularioUnoTipoCarretera extends JPanel {
     	}
 	}
 	
-	public void insertarBotonEnviar() {
+	public void insertarBotones() {
 		JPanel contenedorBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
         contenedorBotones.setBackground(new Color(255, 255, 255, 0));
         contenedorBotones.setBorder(new EmptyBorder(0, 40, 40, 40));
@@ -201,10 +201,10 @@ public class FormularioUnoTipoCarretera extends JPanel {
     public void insertarPieDePagina() {
     	JPanel piePagina = new JPanel();
     	piePagina.setBackground(new Color(242, 97, 63));
-    	piePagina.setBorder(new EmptyBorder(24,12,24,12));
+    	piePagina.setBorder(new EmptyBorder(12,12,12,12));
     	
     	JLabel textoPiePagina = new JLabel("Universidad el Bosque. 2024");
-    	Font fontTextoPiePagina = new Font("Arial", Font.BOLD, 24);
+    	Font fontTextoPiePagina = new Font("Arial", Font.BOLD, 18);
     	textoPiePagina.setFont(fontTextoPiePagina);
     	textoPiePagina.setForeground(new Color(252, 255, 218));
     	
