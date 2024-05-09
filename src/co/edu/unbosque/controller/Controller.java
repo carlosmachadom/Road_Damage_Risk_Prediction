@@ -2,12 +2,10 @@ package co.edu.unbosque.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 import co.edu.unbosque.view.VistaVentana;
 import co.edu.unbosque.DAO.FuzzyVariablesDAO;
 import co.edu.unbosque.DTO.FuzzyInputDTO;
-import net.sourceforge.jFuzzyLogic.FIS;
 
 public class Controller implements ActionListener {
     
