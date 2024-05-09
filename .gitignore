@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-/bin/
-=======
 # Building
 bin/
 lib/
@@ -13,5 +10,3 @@ out/
 .settings/
 .classpath
 Sistema_Difuso_Prediccion_Deterioro_Carreteras.iml
-
->>>>>>> branch 'main' of https://github.com/carlosmachadom/Sistema_Difuso_Prediccion_Deterioro_Carreteras.git
