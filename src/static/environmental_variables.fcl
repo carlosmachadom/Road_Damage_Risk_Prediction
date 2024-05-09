@@ -10,12 +10,12 @@ VAR_OUTPUT
 END_VAR
 
 
-FUZZIFY presipitacion 
+FUZZIFY precipitacion 
 	TERM muy_baja := (0, 1) (90, 1) (150, 0) ; 
     TERM baja := (100, 0) (250, 1) (500, 1) (700, 0); 
     TERM moderada := (600,0) (750, 1) (1000,1) (1200, 0);
-    TERM alta := (1100, 0) (1250, 1) (1500, 1) (1600, 0) ;
-	TERM muy_alta := (1500, 0) (1600, 1) (2000, 1) (3000, 1) ;
+    TERM alta := (1100, 0) (1250, 1) (1500, 1) (1700, 0) ;
+	TERM muy_alta := (1600, 0) (1700, 1) (2200, 1) (3000, 1) ;
 END_FUZZIFY
 
 FUZZIFY temperatura 
@@ -26,9 +26,10 @@ FUZZIFY temperatura
 END_FUZZIFY
 
 DEFUZZIFY condiciones_ambientales  
-    TERM bajo := (0,0) (16,1) (33,0);
-    TERM medio := (30,0) (45,1) (66,0);
-    TERM alto := (60,0) (85,1) (100,0);
+    TERM buenas := (0,0) (0.01,1) (0.02,0);
+    TERM regulares := (0.018,0) (0.03,1) (0.045,0);
+    TERM malas := (0.04,0) (0.055,1) (0.07,0);
+	TERM muy_malas := (0.065,0) (0.09,1) (0.12,0);
     METHOD : COG;
     DEFAULT := 0;
 END_DEFUZZIFY
