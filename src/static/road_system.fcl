@@ -1,8 +1,9 @@
 FUNCTION_BLOCK road_damage_prediction
 
 VAR_INPUT
+    precipitacion : REAL;
+    temperatura : REAL;
     humedad_suelo : REAL;
-    condiciones_ambientales : REAL;
 	trafico : REAL;
 END_VAR
 
@@ -10,17 +11,19 @@ VAR_OUTPUT
     riesgo_de_alto_deterioro : REAL;
 END_VAR
 
-
-FUZZIFY trafico 
-    TERM bajo := (100, 1) (900, 1) (1500, 0); 
-    TERM medio := (1350, 0) (2200,1) (3500,0);
-    TERM alto := (3200, 0) (4300, 1) (6700,1);
+FUZZIFY precipitacion 
+	TERM muy_baja := (0, 1) (90, 1) (150, 0) ; 
+    TERM baja := (100, 0) (250, 1) (500, 1) (700, 0); 
+    TERM moderada := (600,0) (750, 1) (1000,1) (1200, 0);
+    TERM alta := (1100, 0) (1250, 1) (1500, 1) (1700, 0) ;
+	TERM muy_alta := (1600, 0) (1700, 1) (2200, 1) (3000, 1) ;
 END_FUZZIFY
 
-FUZZIFY condiciones_ambientales 
-    TERM buenas := (100, 1) (900, 1) (1500, 0); 
-    TERM regulares := (1350, 0) (2200,1) (3500,0);
-    TERM malas := (3200, 0) (4300, 1) (6700,1);
+FUZZIFY temperatura 
+    TERM frio := (0, 1) (10, 1) (15, 0); 
+    TERM templado := (10,0) (17, 1) (25,0);
+    TERM calido := (20, 0) (27, 1) (35,0);
+    TERM muy_caliente := (30, 0) (35, 1) (50,1);
 END_FUZZIFY
 
 FUZZIFY humedad_suelo 
@@ -28,6 +31,12 @@ FUZZIFY humedad_suelo
     TERM moderadamente_seco := (20,0) (30, 1) (40,1) (50,0);
     TERM humedo := (40, 0) (50, 1) (60, 1) (70, 0);
     TERM extremadamente_humedo := (65, 0) (70, 1) (80,1) (100, 1);
+END_FUZZIFY
+
+FUZZIFY trafico 
+    TERM bajo := (100, 1) (900, 1) (1500, 0); 
+    TERM medio := (1350, 0) (2200,1) (3500,0);
+    TERM alto := (3200, 0) (4300, 1) (6700,1);
 END_FUZZIFY
 
 DEFUZZIFY riesgo_de_alto_deterioro  
@@ -38,14 +47,15 @@ DEFUZZIFY riesgo_de_alto_deterioro
     DEFAULT := 0;
 END_DEFUZZIFY
 
-//RULEBLOCK No1
-    //AND : MIN;            // Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)
-    //ACT : MIN;            // Use 'min' activation method
-    //ACCU : MAX;            // Use 'max' accumulation method
+RULEBLOCK No1
+    AND : MIN;            // Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)
+    ACT : MIN;            // Use 'min' activation method
+    ACCU : MAX;            // Use 'max' accumulation method
 
-    //RULE 1 : IF service IS poor OR food IS rancid THEN tip IS cheap;
-    //RULE 2 : IF service IS good THEN tip IS average; 
-    //RULE 3 : IF service IS excellent AND food IS delicious THEN tip IS generous;
-//END_RULEBLOCK
+	RULE 1 : IF precipitacion IS muy_alta OR temperatura IS muy_caliente AND trafico IS alto THEN riesgo_de_alto_deterioro IS alto;
+	RULE 2 : IF precipitacion IS alta OR temperatura IS calido AND trafico IS medio THEN riesgo_de_alto_deterioro IS promedio;
+	RULE 3 : IF precipitacion IS moderada OR temperatura IS templado AND trafico IS bajo THEN riesgo_de_alto_deterioro IS bajo;
+	
+END_RULEBLOCK
 
 END_FUNCTION_BLOCK
