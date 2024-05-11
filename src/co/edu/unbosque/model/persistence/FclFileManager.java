@@ -12,8 +12,8 @@ public class FclFileManager {
 	private final File file;
 	
 	public FclFileManager() {
+		file = new File("src" + File.separator + "static" + File.separator + "road_system.fcl");
 		fis = new FIS();
-		file = new File("static" + File.separator + "road_system.fcl");
 	}
 	
 	public void loadFclFile() {
@@ -21,6 +21,7 @@ public class FclFileManager {
         
         try {
             fis = FIS.load(path, true);
+            
             if (fis == null) {
                 throw new IllegalArgumentException("Error loading FCL file: " + path);
             }
