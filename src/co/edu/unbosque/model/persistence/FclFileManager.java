@@ -44,6 +44,9 @@ public class FclFileManager {
         return value;
     }
 	
+	/**
+	 * Evalua los input
+	 */
 	public void evaluate() {
         if (fis != null) {
             fis.evaluate();
