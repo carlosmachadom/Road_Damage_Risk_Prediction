@@ -22,6 +22,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -34,7 +35,9 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class FormularioTresTraficoVehicular extends JPanel {
 	private JPanel contenedorFormulario;
-	private JButton botonSiguiente;
+	private JPanel seccionLista;
+	private JPanel lista;
+	private JButton botonEnviar;
 	private JButton botonCancelar;
 	
 	public FormularioTresTraficoVehicular() {
@@ -66,7 +69,7 @@ public class FormularioTresTraficoVehicular extends JPanel {
     	titulo.setBorder(margen);
     	titulo.setForeground(colorFuente);
     	
-    	JLabel stepper = new JLabel("Paso 3");
+    	JLabel stepper = new JLabel("Paso 3 de 3");
     	stepper.setFont(fuente);
     	stepper.setBorder(margen);
     	stepper.setForeground(colorFuente);
@@ -105,83 +108,125 @@ public class FormularioTresTraficoVehicular extends JPanel {
     	titulo.setForeground(colorFuente);
     	titulo.setBorder(margen);
     	
+    	JPanel panelSubTitulo = new JPanel();
+    	panelSubTitulo.setLayout(new BoxLayout(panelSubTitulo, BoxLayout.X_AXIS));
+    	panelSubTitulo.setOpaque(false);
+    	
+    	Font fuente2 = new Font("Arial", Font.BOLD, 24);
+		Color colorFuente2 = new Color(252, 255, 218);
+    	JLabel subtitulo = new JLabel("Vehiculos pesados permitidos");
+    	subtitulo.setFont(fuente2);
+    	subtitulo.setForeground(colorFuente2);
+    	subtitulo.setBorder(BorderFactory.createEmptyBorder(0, 40, 20, 40));
+    	
     	if(contenedorFormulario != null) {
     		panelTitulo.add(titulo);
     		panelTitulo.add(Box.createHorizontalGlue());
+    		panelSubTitulo.add(subtitulo);
+    		panelSubTitulo.add(Box.createHorizontalGlue());
     		contenedorFormulario.add(panelTitulo);
+    		contenedorFormulario.add(panelSubTitulo);    		
     	}
 	}	
 	
 	public void insertarCamposFormulario() {
-		JPanel contenedorCampos = new JPanel();
-		contenedorCampos.setLayout(new BorderLayout());
-		contenedorCampos.setBackground(new Color(250,250,250,100));
-		contenedorCampos.setBorder(new EmptyBorder(20,40,20,40));
-		contenedorCampos.setMaximumSize(new Dimension(this.getPreferredSize().width, 300));
-		contenedorCampos.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		
-		
-		
 		Font fuente = new Font("Arial", Font.BOLD, 24);
 		Color colorFuente = new Color(252, 255, 218);
 		
-		JLabel tituloSeccion = new JLabel("Ejes de vehiculos esperados");
-        tituloSeccion.setFont(fuente);
-        tituloSeccion.setForeground(colorFuente);
-        tituloSeccion.setBorder(new EmptyBorder(0,0,12,0));
+		// Lista de elementos seleccionados
+		seccionLista = new JPanel();
+		seccionLista.setBackground(new Color(0, 0, 0, 0));
+		seccionLista.setBorder(new EmptyBorder(0,0,0,0));
+		seccionLista.setLayout(new BorderLayout());
         
-        contenedorCampos.add(tituloSeccion, BorderLayout.NORTH);
-		
-		JPanel contenedorCheckboxes = new JPanel();
-		contenedorCheckboxes.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-		String[] ejesVehiculos = {"2", "3", "4", "5"};
-		for(String eje : ejesVehiculos) {
-	        JCheckBox checkbox = new JCheckBox(eje);
-	        checkbox.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-	        });
-	        
-	        contenedorCheckboxes.add(checkbox);
-		}
-		
-		contenedorCampos.add(contenedorCheckboxes, BorderLayout.CENTER);
-		
-		
-//		JPanel contenedorCampoUno = new JPanel();
-//		contenedorCampoUno.setLayout(new GridLayout(2, 1, 10, 10));
-//		contenedorCampoUno.setBackground(new Color(0,0,0,0));
-//        JLabel tituloCampoUno = new JLabel("Temperatura promedio");
-//        tituloCampoUno.setFont(fuente);
-//        tituloCampoUno.setForeground(colorFuente);
-//        temperaturaAmbiente = new JTextField();
-//        temperaturaAmbiente.setPreferredSize(new Dimension(300, 30));
-//        contenedorCampoUno.add(tituloCampoUno);
-//        contenedorCampoUno.add(temperaturaAmbiente);
-				
-		
-//		JPanel contenedorCampoDos = new JPanel();
-//		contenedorCampoDos.setLayout(new GridLayout(2, 1, 10, 10));
-//		contenedorCampoDos.setBackground(new Color(0,0,0,0));
-//		JLabel tituloCampoDos = new JLabel("Nivel promedio precipitaciones");
-//		tituloCampoDos.setFont(fuente);
-//		tituloCampoDos.setForeground(colorFuente);
-//        nivelPrecipitaciones = new JTextField();
-//        nivelPrecipitaciones.setPreferredSize(new Dimension(300, 30));
-//        contenedorCampoDos.add(tituloCampoDos);
-//        contenedorCampoDos.add(nivelPrecipitaciones);
+        JPanel tituloCampos = new JPanel();
+        tituloCampos.setBackground(new Color(250, 250, 250, 0));
+        tituloCampos.setBorder(new EmptyBorder(0,40,0,40));
+        tituloCampos.setLayout(new FlowLayout(FlowLayout.LEFT));
         
+        JLabel ejesTitulo = new JLabel("Ejes");
+        ejesTitulo.setFont(fuente);
+        ejesTitulo.setForeground(colorFuente);
+        ejesTitulo.setBorder(new EmptyBorder(0,0,0,0));
         
-        //contenedorCampos.add(contenedorCampoUno);
-        //contenedorCampos.add(Box.createHorizontalStrut(12));
-        //contenedorCampos.add(contenedorCampoDos);
+        JLabel traficoTitulo = new JLabel("Nivel de trafico");
+        traficoTitulo.setFont(fuente);
+        traficoTitulo.setForeground(colorFuente);
+        traficoTitulo.setBorder(new EmptyBorder(0,0,0,0));        
+        
+        JPanel separador = new JPanel();
+        separador.setPreferredSize(new Dimension(180, 10));
+        separador.setBackground(new Color(0,0,0,0));
+        
+        tituloCampos.add(ejesTitulo);
+        tituloCampos.add(separador);
+        tituloCampos.add(traficoTitulo);        
+        
+        seccionLista.add(tituloCampos, BorderLayout.NORTH);
+        
+        lista = new JPanel();
+        lista.setBackground(new Color(242, 97, 63, 0));
+        lista.setBorder(new EmptyBorder(0,0,0,0));
+        lista.setLayout(new BoxLayout(lista, BoxLayout.Y_AXIS));
+        
+        JPanel vehiculo2Ejes = getListElement("2");
+        JPanel vehiculo3Ejes = getListElement("3");
+        JPanel vehiculo4Ejes = getListElement("4");
+        JPanel vehiculo5Ejes = getListElement("5");
+        
+        lista.add(vehiculo2Ejes);
+        lista.add(vehiculo3Ejes);
+        lista.add(vehiculo4Ejes);
+        lista.add(vehiculo5Ejes);
+        
+        seccionLista.add(lista, BorderLayout.CENTER);
+        
         
         if(contenedorFormulario != null) {
-    		contenedorFormulario.add(contenedorCampos);
+    		contenedorFormulario.add(seccionLista);
+    		revalidate();
+    		repaint();
     	}
+	}
+	
+	public JPanel getListElement(String num) {		
+		JPanel seccion = new JPanel();
+		seccion.setLayout(new FlowLayout(FlowLayout.LEADING));
+		seccion.setBackground(new Color(0,0,0,0));
+		seccion.setBorder(new EmptyBorder(0,40,12,40));
+		
+		JPanel container = new JPanel();
+		container.setBackground(new Color(0,0,0,0));
+		container.setPreferredSize(new Dimension(360, 80));
+		
+		JPanel separador = new JPanel();
+        separador.setPreferredSize(new Dimension(180, 10));
+        separador.setBackground(new Color(0,0,0,0));
+		
+		JPanel listElement = new JPanel();
+		listElement.setLayout(new FlowLayout(FlowLayout.LEFT));
+		listElement.setBackground(new Color(72, 30, 20));
+		listElement.setBorder(new EmptyBorder(12,12,12,12));
+		
+		Font fuente = new Font("Arial", Font.BOLD, 24);
+		Color colorFuente = new Color(252, 255, 218);
+		JLabel tituloSeccion = new JLabel(num+" ejes");
+        tituloSeccion.setFont(fuente);
+        tituloSeccion.setForeground(colorFuente);
+        
+        
+        String[] nivelTrafico = {"Ninguno", "Bajo", "Medio", "Alto"};
+        JComboBox<String> selectorTrafico = new JComboBox<String>(nivelTrafico);
+        
+        listElement.add(tituloSeccion);
+        listElement.add(separador);
+        listElement.add(selectorTrafico);
+		
+        container.add(listElement);
+        
+        seccion.add(container);
+        
+		return seccion;
 	}
 	
 	public void insertarBotones() {
@@ -201,20 +246,20 @@ public class FormularioTresTraficoVehicular extends JPanel {
         botonCancelar.setForeground(new Color(72, 30, 20));
         botonCancelar.setActionCommand("Cancelar");
         
-        botonSiguiente = new JButton("Enviar");
-        botonSiguiente.setBackground(new Color(242, 97, 63));
-        botonSiguiente.setFocusPainted(false);
-        botonSiguiente.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        botonSiguiente.setBorder(new EmptyBorder(12, 16, 12, 16));
-        botonSiguiente.setMargin(new Insets(10, 20, 10, 20));
+        botonEnviar = new JButton("Enviar");
+        botonEnviar.setBackground(new Color(242, 97, 63));
+        botonEnviar.setFocusPainted(false);
+        botonEnviar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        botonEnviar.setBorder(new EmptyBorder(12, 16, 12, 16));
+        botonEnviar.setMargin(new Insets(10, 20, 10, 20));
         Font fontBotonInicio = new Font("Arial", Font.BOLD, 24);
-        botonSiguiente.setFont(fontBotonInicio);
-        botonSiguiente.setForeground(new Color(252, 255, 218));
-        botonSiguiente.setActionCommand("Enviar_datos");
+        botonEnviar.setFont(fontBotonInicio);
+        botonEnviar.setForeground(new Color(252, 255, 218));
+        botonEnviar.setActionCommand("Enviar_datos");
 
         contenedorBotones.add(botonCancelar);
         contenedorBotones.add(Box.createHorizontalStrut(16));
-        contenedorBotones.add(botonSiguiente);
+        contenedorBotones.add(botonEnviar);
         
         if(contenedorFormulario != null) {
     		contenedorFormulario.add(contenedorBotones);

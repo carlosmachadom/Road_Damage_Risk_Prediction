@@ -65,7 +65,7 @@ public class FormularioUnoTipoCarretera extends JPanel {
     	titulo.setBorder(margen);
     	titulo.setForeground(colorFuente);
     	
-    	JLabel stepper = new JLabel("Paso 1");
+    	JLabel stepper = new JLabel("Paso 1 de 3");
     	stepper.setFont(fuente);
     	stepper.setBorder(margen);
     	stepper.setForeground(colorFuente);

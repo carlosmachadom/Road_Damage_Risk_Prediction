@@ -6,12 +6,15 @@ import java.awt.event.ActionListener;
 import co.edu.unbosque.view.VistaVentana;
 import co.edu.unbosque.DAO.FuzzyVariablesDAO;
 import co.edu.unbosque.DTO.FuzzyInputDTO;
+import co.edu.unbosque.model.Query;
 
 public class Controller implements ActionListener {
     
     public VistaVentana vista;
 
     private final FuzzyVariablesDAO fuzzyVariablesDAO;
+    
+    private Query consulta;
 
     public Controller() {
         fuzzyVariablesDAO = new FuzzyVariablesDAO();
@@ -79,13 +82,21 @@ public class Controller implements ActionListener {
 			// Iniciar objeto para almacenar información
 			vista.getLayoutPrincipal().insertarFormularioUno();	
 			asignarOyentes();
+			consulta = new Query();			
 			break;
 		case "Informacion_proyecto": 
 			// Llevar a pantalla de información de proyecto
 			asignarOyentes();
 			break;
 		case "Siguiente_formulario_uno":
-			// Almacenar resultados de formulario uno en objeto de consulta
+			// Almacenar resultados de formulario uno (Datos generales carretera) en objeto de consulta
+			if (vista.getLayoutPrincipal().getFormularioUno() != null) {
+				String tipoCarretera = vista.getLayoutPrincipal().getFormularioUno().getTipoCarretera().getSelectedItem().toString();
+				String tipoMaterial = vista.getLayoutPrincipal().getFormularioUno().getMaterialCarretera().getSelectedItem().toString();
+				
+				consulta.setTipoCarretera(tipoCarretera);
+				consulta.setMaterialCarretera(tipoMaterial);
+			}
 			// Insertar formulario numero dos
 			vista.getLayoutPrincipal().insertarFormularioDos();
 			asignarOyentes();

@@ -65,7 +65,7 @@ public class FormularioDosCondicionesAmbientales extends JPanel{
     	titulo.setBorder(margen);
     	titulo.setForeground(colorFuente);
     	
-    	JLabel stepper = new JLabel("Paso 2");
+    	JLabel stepper = new JLabel("Paso 2 de tres");
     	stepper.setFont(fuente);
     	stepper.setBorder(margen);
     	stepper.setForeground(colorFuente);
