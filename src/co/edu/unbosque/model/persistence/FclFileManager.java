@@ -4,6 +4,9 @@ import java.io.File;
 
 import net.sourceforge.jFuzzyLogic.FIS;
 
+/**
+ * Clase encargada de la comunicación con el archivo FCL
+ */
 public class FclFileManager {
 	private FIS fis;
 	private final File file;
