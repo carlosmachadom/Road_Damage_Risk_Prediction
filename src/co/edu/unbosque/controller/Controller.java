@@ -17,7 +17,7 @@ public class Controller implements ActionListener {
         fuzzyVariablesDAO = new FuzzyVariablesDAO();
         vista = new VistaVentana();
         funcionar();
-        run();
+        //run();
     }
 
     private void run() {
@@ -47,9 +47,23 @@ public class Controller implements ActionListener {
 	  }
   
     public void asignarOyentes() {
-		    // Asignando oyentes de la pantalla de inicio
-		    vista.getLayoutPrincipal().getPantallaInicio().getBotonInicio().addActionListener(this);
-		    vista.getLayoutPrincipal().getPantallaInicio().getBotonInformacion().addActionListener(this);
+	    // Asignando oyentes de la pantalla de inicio
+    	if (vista.getLayoutPrincipal().getPantallaInicio() != null) {
+    		vista.getLayoutPrincipal().getPantallaInicio().getBotonInicio().addActionListener(this);
+    		vista.getLayoutPrincipal().getPantallaInicio().getBotonInformacion().addActionListener(this);    		
+    	}
+		    
+    	// Asignar oyentes en el formulario uno
+    	if (vista.getLayoutPrincipal().getFormularioUno() != null) {
+    		vista.getLayoutPrincipal().getFormularioUno().getBotonSiguiente().addActionListener(this);
+    		vista.getLayoutPrincipal().getFormularioUno().getBotonCancelar().addActionListener(this);    		
+    	}
+    	
+    	// Asignar oyentes en el formulario dos
+    	if (vista.getLayoutPrincipal().getFormularioDos() != null) {
+    		vista.getLayoutPrincipal().getFormularioDos().getBotonSiguiente().addActionListener(this);
+    		vista.getLayoutPrincipal().getFormularioDos().getBotonCancelar().addActionListener(this);    		
+    	}
 	  }
   
     @Override
@@ -59,7 +73,35 @@ public class Controller implements ActionListener {
 		    validarAccion(comando);
 	  }
 	
-	  public void validarAccion(String command) {
-		  
-	  }
+	public void validarAccion(String command) {
+		switch (command) {
+		case "inicia_diagnostico":
+			// Iniciar objeto para almacenar información
+			vista.getLayoutPrincipal().insertarFormularioUno();	
+			asignarOyentes();
+			break;
+		case "Informacion_proyecto": 
+			// Llevar a pantalla de información de proyecto
+			asignarOyentes();
+			break;
+		case "Siguiente_formulario_uno":
+			// Almacenar resultados de formulario uno en objeto de consulta
+			// Insertar formulario numero dos
+			vista.getLayoutPrincipal().insertarFormularioDos();
+			asignarOyentes();
+			break;
+		case "Siguiente_formulario_dos":
+			// Almacenar resultados de formulario uno en objeto de consulta
+			// Insertar formulario numero dos
+			vista.getLayoutPrincipal().insertarFormularioTres();
+			asignarOyentes();
+			break;
+		case "Cancelar":
+			// LLevar a pagina de inicio 
+			// Reiniciar objeto de consulta
+		default:
+			break;
+			
+		}
+	}
 }

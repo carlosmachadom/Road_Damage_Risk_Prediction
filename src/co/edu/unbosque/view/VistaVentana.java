@@ -1,7 +1,15 @@
+/**
+ * Ubicación del documento dentro de src
+ */
 package co.edu.unbosque.view;
 
+/**
+ * Importa el layout manager
+ */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -26,6 +34,8 @@ public class VistaVentana extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la aplicación al cerrar la ventana
         getContentPane().setLayout(new BorderLayout()); // Establece el layout principal como BorderLayout
         setMinimumSize(new Dimension(1440, 960)); // Establece el tamaño mínimo de la ventana
+        ImageIcon favicon = new ImageIcon("src\\images\\Paviment_forecast.png");
+        setIconImage(favicon.getImage());
         
         inicializarComponentes(); // Inicializa y configura los componentes de la ventana
         

@@ -1,6 +1,7 @@
 package co.edu.unbosque.DAO;
 
-import co.edu.unbosque.model.persistence.FclFileManager;
+import co.edu.unbosque.controller.Controller;
+import co.edu.unbosque.controller.FclFileManager;
 import net.sourceforge.jFuzzyLogic.FIS;
 import co.edu.unbosque.DTO.FuzzyInputDTO;
 

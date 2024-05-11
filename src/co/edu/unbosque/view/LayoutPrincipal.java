@@ -52,6 +52,8 @@ public class LayoutPrincipal extends JPanel{
 		repintarRevalidarPanel();
 		
 		// Agregar formulario 1
+		formularioUno = new FormularioUnoTipoCarretera();
+		add(formularioUno);
 		
 		repintarRevalidarPanel();
 	}
@@ -61,6 +63,8 @@ public class LayoutPrincipal extends JPanel{
 		repintarRevalidarPanel();
 		
 		// Agregar formulario 2
+		formularioDos = new FormularioDosCondicionesAmbientales();
+		add(formularioDos);
 		
 		repintarRevalidarPanel();
 	}
@@ -70,6 +74,8 @@ public class LayoutPrincipal extends JPanel{
 		repintarRevalidarPanel();
 		
 		// Agregar formulario 3
+		formularioTres = new FormularioTresTraficoVehicular();
+		add(formularioTres);
 		
 		repintarRevalidarPanel();
 	}
