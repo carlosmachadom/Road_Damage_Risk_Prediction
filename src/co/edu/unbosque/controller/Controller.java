@@ -3,51 +3,31 @@ package co.edu.unbosque.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import co.edu.unbosque.view.VistaVentana;
 import co.edu.unbosque.DAO.FuzzyVariablesDAO;
 import co.edu.unbosque.DTO.FuzzyInputDTO;
-import co.edu.unbosque.model.Query;
 
 public class Controller implements ActionListener {
     
     public VistaVentana vista;
 
-    private final FuzzyVariablesDAO fuzzyVariablesDAO;
-    
-    private Query consulta;
+    private final FuzzyVariablesDAO mainFuzzySystemDAO;    
+    private final FuzzyVariablesDAO condicionesInicialesViaFuzzySystemDAO;    
+    private final FuzzyVariablesDAO condicionesAmbientalesFuzzySystemDAO;    
 
     public Controller() {
-        fuzzyVariablesDAO = new FuzzyVariablesDAO();
+        mainFuzzySystemDAO = new FuzzyVariablesDAO();
+        condicionesInicialesViaFuzzySystemDAO = new FuzzyVariablesDAO("condiciones_iniciales_via.fcl");
+        condicionesAmbientalesFuzzySystemDAO = new FuzzyVariablesDAO("enviromental_conditions.fcl");
         vista = new VistaVentana();
         funcionar();
-        //run();
-    }
-
-    private void run() {
-        fuzzyVariablesDAO.putFuzzifiedVariable(new FuzzyInputDTO("trafico", 100.3));
-        fuzzyVariablesDAO.putFuzzifiedVariable(new FuzzyInputDTO("peso_vehiculos", .5));
-        fuzzyVariablesDAO.putFuzzifiedVariable(new FuzzyInputDTO("humedad", .2));
-        fuzzyVariablesDAO.putFuzzifiedVariable(new FuzzyInputDTO("precipitacion", .1));
-        fuzzyVariablesDAO.putFuzzifiedVariable(new FuzzyInputDTO("riesgo_de_alto_deterioro", .9));
-
-        fuzzyVariablesDAO.evaluate();
-
-        FuzzyInputDTO f = fuzzyVariablesDAO.getDefuzzifiedVariable("trafico");
-        FuzzyInputDTO g = fuzzyVariablesDAO.getDefuzzifiedVariable("peso_vehiculos");
-        FuzzyInputDTO h = fuzzyVariablesDAO.getDefuzzifiedVariable("humedad");
-        FuzzyInputDTO i = fuzzyVariablesDAO.getDefuzzifiedVariable("precipitacion");
-        FuzzyInputDTO j = fuzzyVariablesDAO.getDefuzzifiedVariable("riesgo_de_alto_deterioro");
-
-        System.out.println(f.getkey() + " <=> " + f.getValue());
-        System.out.println(g.getkey() + " <=> " + g.getValue());
-        System.out.println(h.getkey() + " <=> " + h.getValue());
-        System.out.println(i.getkey() + " <=> " + i.getValue());
-        System.out.println(j.getkey() + " <=> " + j.getValue());
     }
   
     private void funcionar() {
-		    asignarOyentes();
-	  }
+	    asignarOyentes();
+    }
   
     public void asignarOyentes() {
 	    // Asignando oyentes de la pantalla de inicio
@@ -79,32 +59,108 @@ public class Controller implements ActionListener {
 	public void validarAccion(String command) {
 		switch (command) {
 		case "inicia_diagnostico":
-			// Iniciar objeto para almacenar información
 			vista.getLayoutPrincipal().insertarFormularioUno();	
-			asignarOyentes();
-			consulta = new Query();			
-			break;
-		case "Informacion_proyecto": 
-			// Llevar a pantalla de información de proyecto
 			asignarOyentes();
 			break;
 		case "Siguiente_formulario_uno":
-			// Almacenar resultados de formulario uno (Datos generales carretera) en objeto de consulta
 			if (vista.getLayoutPrincipal().getFormularioUno() != null) {
 				String tipoCarretera = vista.getLayoutPrincipal().getFormularioUno().getTipoCarretera().getSelectedItem().toString();
 				String tipoMaterial = vista.getLayoutPrincipal().getFormularioUno().getMaterialCarretera().getSelectedItem().toString();
 				
-				consulta.setTipoCarretera(tipoCarretera);
-				consulta.setMaterialCarretera(tipoMaterial);
-			}
-			// Insertar formulario numero dos
-			vista.getLayoutPrincipal().insertarFormularioDos();
-			asignarOyentes();
+				int valorCarretera = 0;
+				double valorMaterial = 0;
+				
+				switch (tipoCarretera) {
+					case "Primaria":
+						valorCarretera = 1; 
+						break;
+					case "Secundaria": 
+						valorCarretera = 2;
+						break;
+					case "Terciaria":
+						valorCarretera = 3;
+						break;
+					default:
+						break;
+				}				
+				
+				switch (tipoMaterial) {
+				case "Igneo":
+					valorMaterial = 0.1; 
+					break;
+				case "Sedimentario": 
+					valorMaterial = 0.3;
+					break;
+				case "Metamorfico":
+					valorMaterial = 0.6;
+					break;
+				default:
+					break;
+				}
+				
+				mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("tipo_carretera", valorCarretera));
+				condicionesInicialesViaFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("material_carretera", valorMaterial));
+		    	
+		    	String humedadSuelo = vista.getLayoutPrincipal().getFormularioUno().getHumedadSuelo().getText();
+		    	
+		    	if (!validateInput(humedadSuelo)) {
+		    		try {
+		    			condicionesInicialesViaFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("humedad_suelo", convertToInt(humedadSuelo)));
+		    			condicionesInicialesViaFuzzySystemDAO.evaluate();
+		    			
+		    			double condicionesVia = condicionesInicialesViaFuzzySystemDAO.getVariable("condiciones_iniciales_via").getValue();
+		    			mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_iniciales_via", condicionesVia));
+				    	
+		    			
+		    			vista.getLayoutPrincipal().insertarFormularioDos();
+				    	asignarOyentes();
+		    		} catch (NumberFormatException e) {
+		    			JOptionPane.showMessageDialog(null, "Error: El formato del string no es válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+		    		}
+		    	} else {
+		    		JOptionPane.showMessageDialog(null, "Error: El formato del string no es válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+		    	}
+			}			
 			break;
 		case "Siguiente_formulario_dos":
-			// Almacenar resultados de formulario uno en objeto de consulta
-			// Insertar formulario numero dos
-			vista.getLayoutPrincipal().insertarFormularioTres();
+			if (vista.getLayoutPrincipal().getFormularioDos() != null) {
+
+				String temperaturaAmbiente = vista.getLayoutPrincipal().getFormularioDos().getTemperaturaAmbiente().getText();
+				String nivelPrecipitaciones = vista.getLayoutPrincipal().getFormularioDos().getNivelPrecipitaciones().getText();
+				
+				try {
+					if (!validateInput(temperaturaAmbiente) && !validateInput(nivelPrecipitaciones)) {
+						double temperatura = convertToInt(temperaturaAmbiente);
+						double precipitaciones = convertToInt(nivelPrecipitaciones);
+						
+						condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("temperatura", temperatura));		            		            
+						condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("precipitacion", precipitaciones));
+						condicionesAmbientalesFuzzySystemDAO.evaluate();
+						
+						double condicionesAmbientales = condicionesAmbientalesFuzzySystemDAO.getVariable("condiciones_ambientales").getValue();
+		    			mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_ambientales", condicionesAmbientales));						
+						
+						vista.getLayoutPrincipal().insertarFormularioTres();
+						asignarOyentes();						
+					} else {
+						JOptionPane.showMessageDialog(null, "Error: Debes ingresar información.", "Sin datos", JOptionPane.ERROR_MESSAGE);
+					}
+		        } catch (NumberFormatException e) {
+		        	 JOptionPane.showMessageDialog(null, "Error: El formato del string no es válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+		        }
+			}			
+			break;
+		case "Enviar":
+			// Obtener los vehiculos y trafico
+			
+			// Insertar en el JavaFuzzy los datos
+			
+			// Obtener respuesta
+			
+			// Insertar panel de respuesta
+			break;
+		case "Informacion_proyecto": 
+			// Llevar a pantalla de información de proyecto
 			asignarOyentes();
 			break;
 		case "Cancelar":
@@ -115,4 +171,34 @@ public class Controller implements ActionListener {
 			
 		}
 	}
+	
+	public double convertToDouble(String str) throws NumberFormatException {
+        double result;
+        try {
+            result = Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            throw e;
+        }
+        return result;
+    }
+	
+	public int convertToInt(String str) throws NumberFormatException {
+		int result;
+		try {
+			result = Integer.parseInt(str);
+		} catch (NumberFormatException e) {
+			throw e;
+		}
+		return result;
+	}
+	
+	public boolean validateInput(String input) {
+		boolean respuesta = false;
+        
+		if (input == null || input.isEmpty()) {
+            respuesta = true;
+        }
+        
+        return respuesta;
+    }
 }

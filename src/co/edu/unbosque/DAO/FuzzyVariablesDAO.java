@@ -1,8 +1,5 @@
 package co.edu.unbosque.DAO;
-
-import co.edu.unbosque.controller.Controller;
 import co.edu.unbosque.model.persistence.FclFileManager;
-import net.sourceforge.jFuzzyLogic.FIS;
 import co.edu.unbosque.DTO.FuzzyInputDTO;
 
 public class FuzzyVariablesDAO {
@@ -13,13 +10,18 @@ public class FuzzyVariablesDAO {
         fclFileManager = new FclFileManager();
         fclFileManager.loadFclFile();
     }
+    
+    public FuzzyVariablesDAO(String fileName) {
+    	fclFileManager = new FclFileManager(fileName);
+    	fclFileManager.loadFclFile();
+    }
 
-    public void putFuzzifiedVariable(FuzzyInputDTO variable) {
+    public void putFuzzifiedVariable(FuzzyInputDTO variable) {    	
         fclFileManager.setVariable(variable.getkey(), variable.getValue());
     }
 
     public FuzzyInputDTO getDefuzzifiedVariable(String key) {
-    	FuzzyInputDTO fuzzyDTO = new FuzzyInputDTO(key, Double.NaN);
+    	FuzzyInputDTO fuzzyDTO = null;
     	
     	double value = fclFileManager.getDefuzzifiedVariable(key);
         
@@ -28,6 +30,18 @@ public class FuzzyVariablesDAO {
         }
         
         return fuzzyDTO;
+    }
+    
+    public FuzzyInputDTO getVariable(String key) {
+    	FuzzyInputDTO fuzzyDTO = null;
+    	
+    	double value = fclFileManager.getVariable(key);
+    	
+    	if (value != -1) {
+    		fuzzyDTO = new FuzzyInputDTO(key, value);
+    	}
+    	
+    	return fuzzyDTO;
     }
 
     public void evaluate() {

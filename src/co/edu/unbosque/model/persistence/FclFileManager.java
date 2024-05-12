@@ -16,6 +16,11 @@ public class FclFileManager {
 		fis = new FIS();
 	}
 	
+	public FclFileManager(String fileName) {
+		file = new File("src" + File.separator + "static" + File.separator + fileName);
+		fis = new FIS();
+	}
+	
 	public void loadFclFile() {
         String path = file.getPath();
         
@@ -40,13 +45,25 @@ public class FclFileManager {
 		double value = 0;
 		
         if (fis != null && fis.getVariable(key) != null) {
-            value = fis.getVariable(key).getValue();
+            value = fis.getVariable(key).getLatestDefuzzifiedValue();
         } else {
         	value = -1;
         }
         
         return value;
     }
+	
+	public double getVariable(String key) {
+		double value = 0;
+		
+		if (fis != null && fis.getVariable(key) != null) {
+			value = fis.getVariable(key).getValue();
+		} else {
+			value = -1;
+		}
+		
+		return value;
+	}
 	
 	/**
 	 * Evalua los input

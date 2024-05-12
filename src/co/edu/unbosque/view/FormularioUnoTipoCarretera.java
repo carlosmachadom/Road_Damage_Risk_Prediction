@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
@@ -33,6 +34,7 @@ public class FormularioUnoTipoCarretera extends JPanel {
 	private JPanel contenedorFormulario;	
 	private JComboBox<String> tipoCarretera;
 	private JComboBox<String> materialCarretera;
+	private JTextField humedadSuelo;
 	private JButton botonSiguiente;
 	private JButton botonCancelar;
 	
@@ -147,16 +149,28 @@ public class FormularioUnoTipoCarretera extends JPanel {
         contenedorCampoDos.add(tituloCampoDos);
         contenedorCampoDos.add(materialCarretera);
         
+        JPanel contenedorCampoTres = new JPanel();
+        contenedorCampoTres.setLayout(new GridLayout(2, 1, 10, 10));
+        contenedorCampoTres.setBackground(new Color(0,0,0,0));
+		JLabel tituloCampoTres = new JLabel("Porcentaje humedad suelo");
+		tituloCampoTres.setFont(fuente);
+		tituloCampoTres.setForeground(colorFuente);
+        humedadSuelo = new JTextField();
+        humedadSuelo.setPreferredSize(new Dimension(300, 30));
+        contenedorCampoTres.add(tituloCampoTres);
+        contenedorCampoTres.add(humedadSuelo);        
         
         contenedorCampos.add(contenedorCampoUno);
-        contenedorCampos.add(Box.createHorizontalStrut(12));
+        contenedorCampos.add(Box.createHorizontalStrut(8));
         contenedorCampos.add(contenedorCampoDos);
+        contenedorCampos.add(Box.createHorizontalStrut(8));
+        contenedorCampos.add(contenedorCampoTres);
         
         if(contenedorFormulario != null) {
     		contenedorFormulario.add(contenedorCampos);
     	}
 	}
-	
+
 	public void insertarBotones() {
 		JPanel contenedorBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
         contenedorBotones.setBackground(new Color(255, 255, 255, 0));
@@ -235,6 +249,10 @@ public class FormularioUnoTipoCarretera extends JPanel {
 		return materialCarretera;
 	}
 
+	public JTextField getHumedadSuelo() {
+		return humedadSuelo;
+	}
+	
 	public JButton getBotonSiguiente() {
 		return botonSiguiente;
 	}
@@ -242,4 +260,5 @@ public class FormularioUnoTipoCarretera extends JPanel {
 	public JButton getBotonCancelar() {
 		return botonCancelar;
 	}
+	
 }

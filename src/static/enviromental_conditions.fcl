@@ -1,0 +1,64 @@
+// Definición del sistema difuso
+FUNCTION_BLOCK EnvironmentalConditionsSystem
+
+// Definición de la variable de entrada (precipitación)
+VAR_INPUT
+    precipitacion : REAL; // Precipitación (en milímetros)
+    temperatura : REAL; // Temperatura (en grados Celsius)
+END_VAR
+
+// Definición de la variable de salida (condiciones ambientales)
+VAR_OUTPUT
+    condiciones_ambientales : REAL; // Condiciones ambientales (numérico)
+END_VAR
+
+// Definición de conjuntos difusos para la variable de entrada "precipitación"
+FUZZIFY precipitacion
+    TERM muy_baja := (0, 1) (30, 0);
+    TERM baja := (20, 0) (30, 1) (80, 0);
+    TERM moderada := (60, 0) (80, 1) (120, 0);
+    TERM alta := (100, 0) (120, 1) (150, 0);
+    TERM muy_alta := (120, 0) (150, 1);
+END_FUZZIFY
+
+// Definición de conjuntos difusos para la variable de entrada "temperatura"
+FUZZIFY temperatura
+    TERM muy_fria := (-5, 1) (5, 0);
+    TERM fria := (0, 0) (5, 1) (13, 0);                                                                                              
+    TERM templada := (11, 0) (15, 1) (20, 0);
+    TERM calida := (18, 0) (25, 1) (30, 0);
+    TERM muy_calida := (25, 0) (30, 1);
+END_FUZZIFY
+
+// Definición de conjuntos difusos para la variable de salida "condiciones ambientales"
+DEFUZZIFY condiciones_ambientales
+    TERM buenas := (0, 1) (30, 0);
+    TERM regulares := (20, 0) (50, 1) (60, 0);
+    TERM malas := (50, 0) (100, 1);
+    METHOD : COG;
+    DEFAULT := 0;
+END_DEFUZZIFY
+
+// Reglas difusas para determinar las condiciones ambientales en función de la precipitación y la temperatura
+RULEBLOCK rules
+    AND : MIN;
+    OR : MAX;
+    ACT : MIN;
+    RULE 1 : IF precipitacion IS muy_baja AND temperatura IS muy_fria THEN condiciones_ambientales IS buenas;
+    RULE 2 : IF precipitacion IS baja AND temperatura IS fria THEN condiciones_ambientales IS buenas;
+    RULE 3 : IF precipitacion IS moderada AND temperatura IS templada THEN condiciones_ambientales IS regulares;
+    RULE 4 : IF precipitacion IS alta AND temperatura IS calida THEN condiciones_ambientales IS regulares;
+    RULE 5 : IF precipitacion IS muy_alta AND temperatura IS muy_calida THEN condiciones_ambientales IS malas;
+    RULE 6 : IF precipitacion IS muy_baja AND temperatura IS templada THEN condiciones_ambientales IS buenas;
+    RULE 7 : IF precipitacion IS baja AND temperatura IS calida THEN condiciones_ambientales IS regulares;
+    RULE 8 : IF precipitacion IS moderada AND temperatura IS fria THEN condiciones_ambientales IS regulares;
+    RULE 9 : IF precipitacion IS alta AND temperatura IS muy_fria THEN condiciones_ambientales IS regulares;
+    RULE 10 : IF precipitacion IS muy_alta AND temperatura IS calida THEN condiciones_ambientales IS malas;
+    RULE 11 : IF precipitacion IS muy_baja AND temperatura IS muy_calida THEN condiciones_ambientales IS buenas;
+    RULE 12 : IF precipitacion IS baja AND temperatura IS muy_fria THEN condiciones_ambientales IS buenas;
+    RULE 13 : IF precipitacion IS moderada AND temperatura IS calida THEN condiciones_ambientales IS regulares;
+    RULE 14 : IF precipitacion IS alta AND temperatura IS templada THEN condiciones_ambientales IS regulares;
+    RULE 15 : IF precipitacion IS muy_alta AND temperatura IS fria THEN condiciones_ambientales IS malas;
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK

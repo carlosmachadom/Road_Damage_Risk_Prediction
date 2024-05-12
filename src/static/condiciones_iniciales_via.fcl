@@ -1,0 +1,61 @@
+FUNCTION_BLOCK road_initial_conditions
+
+VAR_INPUT
+    material_carretera : REAL; // Valores de 0 (ígneo), 1 (sedimentario), 2 (metamórfico)
+    humedad_suelo : REAL; // Valor difuso de humedad del suelo (rango de 0 a 100)
+END_VAR
+
+VAR_OUTPUT
+    condiciones_iniciales_via : REAL; // Valor de 0 a 2 representando las condiciones iniciales de la vía
+END_VAR
+
+// Definición de pesos para cada tipo de material
+// Ígneo: 0.1, Sedimentario: 0.3, Metamórfico: 0.6
+FUZZIFY material_carretera
+    TERM igneo := (0, 1) (0.1, 1) (0.2, 0);
+    TERM sedimentario := (0.1, 0) (0.3, 1) (0.4, 0);
+    TERM metamorfico := (0.3, 0) (0.6, 1) (0.7, 0);
+END_FUZZIFY
+
+// Definición de variable humedad de suelo
+FUZZIFY humedad_suelo 
+    TERM seco := (0, 1) (10, 1) (20, 1) (25, 0); 
+    TERM moderadamente_seco := (20,0) (30, 1) (40,1) (50,0);
+    TERM humedo := (40, 0) (50, 1) (60, 1) (70, 0);
+    TERM extremadamente_humedo := (65, 0) (70, 1) (80,1) (100, 1);
+END_FUZZIFY
+
+// Definición de conjuntos difusos para las condiciones iniciales de la vía
+DEFUZZIFY condiciones_iniciales_via  
+    TERM malas := (0, 1) (0.25, 1) (0.5, 0);
+    TERM regulares := (0.25, 0) (0.5, 1) (0.75, 1) (1, 0);
+    TERM buenas := (0.5, 0) (0.75, 1) (1, 1);
+    METHOD : COG;
+    DEFAULT := 0;
+END_DEFUZZIFY
+
+RULEBLOCK initial_conditions_rules
+    AND : MIN;
+    ACT : MIN;
+    ACCU : MAX;
+
+    // Reglas difusas para determinar las condiciones iniciales de la vía
+    RULE 1 : IF humedad_suelo IS seco AND material_carretera IS igneo THEN condiciones_iniciales_via IS buenas;
+    RULE 2 : IF humedad_suelo IS seco AND material_carretera IS sedimentario THEN condiciones_iniciales_via IS regulares;
+    RULE 3 : IF humedad_suelo IS seco AND material_carretera IS metamorfico THEN condiciones_iniciales_via IS malas;
+
+    RULE 4 : IF humedad_suelo IS moderadamente_seco AND material_carretera IS igneo THEN condiciones_iniciales_via IS buenas;
+    RULE 5 : IF humedad_suelo IS moderadamente_seco AND material_carretera IS sedimentario THEN condiciones_iniciales_via IS regulares;
+    RULE 6 : IF humedad_suelo IS moderadamente_seco AND material_carretera IS metamorfico THEN condiciones_iniciales_via IS malas;
+
+    RULE 7 : IF humedad_suelo IS humedo AND material_carretera IS igneo THEN condiciones_iniciales_via IS regulares;
+    RULE 8 : IF humedad_suelo IS humedo AND material_carretera IS sedimentario THEN condiciones_iniciales_via IS malas;
+    RULE 9 : IF humedad_suelo IS humedo AND material_carretera IS metamorfico THEN condiciones_iniciales_via IS malas;
+
+    RULE 10 : IF humedad_suelo IS extremadamente_humedo AND material_carretera IS igneo THEN condiciones_iniciales_via IS regulares;
+    RULE 11 : IF humedad_suelo IS extremadamente_humedo AND material_carretera IS sedimentario THEN condiciones_iniciales_via IS malas;
+    RULE 12 : IF humedad_suelo IS extremadamente_humedo AND material_carretera IS metamorfico THEN condiciones_iniciales_via IS malas;
+
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
