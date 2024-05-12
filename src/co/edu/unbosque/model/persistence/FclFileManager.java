@@ -3,6 +3,10 @@ package co.edu.unbosque.model.persistence;
 import java.io.File;
 
 import net.sourceforge.jFuzzyLogic.FIS;
+import net.sourceforge.jFuzzyLogic.FunctionBlock;
+import net.sourceforge.jFuzzyLogic.membership.MembershipFunction;
+import net.sourceforge.jFuzzyLogic.rule.LinguisticTerm;
+import net.sourceforge.jFuzzyLogic.rule.Variable;
 
 /**
  * Clase encargada de la comunicación con el archivo FCL
@@ -64,6 +68,30 @@ public class FclFileManager {
 		
 		return value;
 	}
+	
+	public String getFuzzifiedVariable(String key) {	
+		String etiquetaAsociada = null;
+		
+		// Obtener el bloque de funciones del sistema difuso
+        FunctionBlock functionBlock = fis.getFunctionBlock(null);
+        
+        // Obtener la variable de salida
+        Variable outputVariable = functionBlock.getVariable(key);      
+        
+        double maxMembership = -1;
+
+        // Iterar sobre los términos lingüísticos de la variable de salida
+        for (String label : outputVariable.getLinguisticTerms().keySet()) {
+        	double membership = outputVariable.getMembership(label);
+        	
+            if (membership > maxMembership) {
+                maxMembership = membership;
+                etiquetaAsociada = label;
+            }
+        }
+
+        return etiquetaAsociada;
+    }
 	
 	/**
 	 * Evalua los input

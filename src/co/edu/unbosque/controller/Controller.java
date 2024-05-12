@@ -105,15 +105,20 @@ public class Controller implements ActionListener {
 		    	
 		    	if (!validateInput(humedadSuelo)) {
 		    		try {
-		    			condicionesInicialesViaFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("humedad_suelo", convertToInt(humedadSuelo)));
-		    			condicionesInicialesViaFuzzySystemDAO.evaluate();
+		    			int hSuelo = convertToInt(humedadSuelo);
 		    			
-		    			double condicionesVia = condicionesInicialesViaFuzzySystemDAO.getVariable("condiciones_iniciales_via").getValue();
-		    			mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_iniciales_via", condicionesVia));
-				    	
-		    			
-		    			vista.getLayoutPrincipal().insertarFormularioDos();
-				    	asignarOyentes();
+		    			if(hSuelo >= 0 && hSuelo <= 100) {		    				
+		    				condicionesInicialesViaFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("humedad_suelo", hSuelo));
+		    				condicionesInicialesViaFuzzySystemDAO.evaluate();
+		    				
+		    				double condicionesVia = condicionesInicialesViaFuzzySystemDAO.getVariable("condiciones_iniciales_via").getValue();
+		    				mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_iniciales_via", condicionesVia));
+		    				
+		    				vista.getLayoutPrincipal().insertarFormularioDos();
+		    				asignarOyentes();
+		    			} else {
+		    				JOptionPane.showMessageDialog(null, "Error: Humedad del suelo fuera de rango, esta debe estar entre 0% y 100%.", "Error de input", JOptionPane.ERROR_MESSAGE);
+		    			}
 		    		} catch (NumberFormatException e) {
 		    			JOptionPane.showMessageDialog(null, "Error: El formato del string no es válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
 		    		}

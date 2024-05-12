@@ -43,6 +43,18 @@ public class FuzzyVariablesDAO {
     	
     	return fuzzyDTO;
     }
+    
+    public String getFuzzifiedVariable(String variable) {
+    	String fuzzyfiedVariable = null;
+    	
+    	String linguisticTerm = fclFileManager.getFuzzifiedVariable(variable);
+    	
+    	if (linguisticTerm != null) {
+    		fuzzyfiedVariable = linguisticTerm;
+    	}
+    	
+    	return fuzzyfiedVariable;
+    }
 
     public void evaluate() {
         fclFileManager.evaluate();
