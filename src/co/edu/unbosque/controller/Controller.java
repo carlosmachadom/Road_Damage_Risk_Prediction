@@ -1,5 +1,6 @@
 package co.edu.unbosque.controller;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -159,6 +160,11 @@ public class Controller implements ActionListener {
 			break;
 		case "Enviar":
 			// Obtener los vehiculos y trafico
+			if (vista.getLayoutPrincipal().getFormularioTres() != null) {
+				Component[] lista = vista.getLayoutPrincipal().getFormularioTres().getLista().getComponents();
+				
+				
+			}
 			
 			// Insertar en el JavaFuzzy los datos
 			
