@@ -12,9 +12,9 @@ END_VAR
 // Definición de pesos para cada tipo de material
 // Ígneo: 0.1, Sedimentario: 0.3, Metamórfico: 0.6
 FUZZIFY material_carretera
-    TERM igneo := (0, 1) (0.1, 1) (0.2, 0);
-    TERM sedimentario := (0.1, 0) (0.3, 1) (0.4, 0);
-    TERM metamorfico := (0.3, 0) (0.6, 1) (0.7, 0);
+    TERM igneo := 0.1;
+    TERM sedimentario := 0.3;
+    TERM metamorfico := 0.6;
 END_FUZZIFY
 
 // Definición de variable humedad de suelo

@@ -67,31 +67,31 @@ public class Controller implements ActionListener {
 				String tipoCarretera = vista.getLayoutPrincipal().getFormularioUno().getTipoCarretera().getSelectedItem().toString();
 				String tipoMaterial = vista.getLayoutPrincipal().getFormularioUno().getMaterialCarretera().getSelectedItem().toString();
 				
-				int valorCarretera = 0;
+				double valorCarretera = 0;
 				double valorMaterial = 0;
 				
 				switch (tipoCarretera) {
 					case "Primaria":
-						valorCarretera = 1; 
+						valorCarretera = 0.7; 
 						break;
 					case "Secundaria": 
-						valorCarretera = 2;
+						valorCarretera = 0.2;
 						break;
 					case "Terciaria":
-						valorCarretera = 3;
+						valorCarretera = 0.1;
 						break;
 					default:
 						break;
 				}				
 				
 				switch (tipoMaterial) {
-				case "Igneo":
+				case "Igneos":
 					valorMaterial = 0.1; 
 					break;
-				case "Sedimentario": 
+				case "Sedimentarios": 
 					valorMaterial = 0.3;
 					break;
-				case "Metamorfico":
+				case "Metamorficos":
 					valorMaterial = 0.6;
 					break;
 				default:
@@ -137,6 +137,8 @@ public class Controller implements ActionListener {
 					if (!validateInput(temperaturaAmbiente) && !validateInput(nivelPrecipitaciones)) {
 						double temperatura = convertToInt(temperaturaAmbiente);
 						double precipitaciones = convertToInt(nivelPrecipitaciones);
+						
+						
 						
 						condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("temperatura", temperatura));		            		            
 						condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("precipitacion", precipitaciones));

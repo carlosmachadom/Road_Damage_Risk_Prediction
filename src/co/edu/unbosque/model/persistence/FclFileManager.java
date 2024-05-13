@@ -40,6 +40,7 @@ public class FclFileManager {
     }
 	
 	public void setVariable(String variable, double value) {
+		//System.out.println(variable + ": " + value);
 		if (fis != null) {
 	        fis.setVariable(variable, value);
 	    }

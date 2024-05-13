@@ -35,7 +35,6 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class FormularioTresTraficoVehicular extends JPanel {
 	private JPanel contenedorFormulario;
-	private JPanel seccionLista;
 	private JPanel lista;
 	private JButton botonEnviar;
 	private JButton botonCancelar;
@@ -134,7 +133,7 @@ public class FormularioTresTraficoVehicular extends JPanel {
 		Color colorFuente = new Color(252, 255, 218);
 		
 		// Lista de elementos seleccionados
-		seccionLista = new JPanel();
+		JPanel seccionLista = new JPanel();
 		seccionLista.setBackground(new Color(0, 0, 0, 0));
 		seccionLista.setBorder(new EmptyBorder(0,0,0,0));
 		seccionLista.setLayout(new BorderLayout());
@@ -294,4 +293,16 @@ public class FormularioTresTraficoVehicular extends JPanel {
         setOpaque(false); // Hace el panel transparente
         super.paint(g); // Llama al método paint de la superclase JPanel
     }
+
+	public JPanel getLista() {
+		return lista;
+	}
+
+	public JButton getBotonEnviar() {
+		return botonEnviar;
+	}
+
+	public JButton getBotonCancelar() {
+		return botonCancelar;
+	}
 }

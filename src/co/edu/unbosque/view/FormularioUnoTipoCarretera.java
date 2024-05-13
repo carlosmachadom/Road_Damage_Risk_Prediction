@@ -113,12 +113,22 @@ public class FormularioUnoTipoCarretera extends JPanel {
     	}
 	}		
 	
-	public void insertarCamposFormulario() {
+	public void insertarCamposFormulario() {		
+		JPanel seccion = new JPanel();
+		seccion.setLayout(new FlowLayout(FlowLayout.LEADING));
+		seccion.setBackground(new Color(0,0,0,0));
+		seccion.setBorder(new EmptyBorder(0,40,40,0));
+		
+		JPanel container = new JPanel();
+		container.setBackground(new Color(0,0,0,0));
+		container.setPreferredSize(new Dimension(1000, 110));
+		container.setBorder(new EmptyBorder(0,0,0,0));
+		
 		JPanel contenedorCampos = new JPanel();
 		contenedorCampos.setLayout(new FlowLayout(FlowLayout.LEFT));
 		contenedorCampos.setBackground(new Color(0,0,0,0));
-		contenedorCampos.setBorder(new EmptyBorder(20,40,20,40));
-		contenedorCampos.setMaximumSize(new Dimension(this.getPreferredSize().width, 300));
+		contenedorCampos.setBorder(new EmptyBorder(20,0,20,40));
+		contenedorCampos.setMaximumSize(new Dimension(this.getPreferredSize().width, 110));
 		contenedorCampos.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
 		Font fuente = new Font("Arial", Font.BOLD, 24);
@@ -166,12 +176,19 @@ public class FormularioUnoTipoCarretera extends JPanel {
         contenedorCampos.add(Box.createHorizontalStrut(8));
         contenedorCampos.add(contenedorCampoTres);
         
+        
+        container.add(contenedorCampos);
+        seccion.add(container);
+        
         if(contenedorFormulario != null) {
-    		contenedorFormulario.add(contenedorCampos);
+    		contenedorFormulario.add(seccion);
     	}
 	}
 
 	public void insertarBotones() {
+		JPanel contenedor = new JPanel(new BorderLayout());
+		contenedor.setBackground(new Color(0,0,200,0));
+		
 		JPanel contenedorBotones = new JPanel(new FlowLayout(FlowLayout.LEFT));
         contenedorBotones.setBackground(new Color(255, 255, 255, 0));
         contenedorBotones.setBorder(new EmptyBorder(0, 40, 40, 40));
@@ -203,8 +220,10 @@ public class FormularioUnoTipoCarretera extends JPanel {
         contenedorBotones.add(Box.createHorizontalStrut(16));
         contenedorBotones.add(botonSiguiente);
         
+        contenedor.add(contenedorBotones, BorderLayout.NORTH);
+        
         if(contenedorFormulario != null) {
-    		contenedorFormulario.add(contenedorBotones);
+    		contenedorFormulario.add(contenedor);
     	}
 	}
 	
