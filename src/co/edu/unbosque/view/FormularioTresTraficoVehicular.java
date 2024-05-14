@@ -214,7 +214,7 @@ public class FormularioTresTraficoVehicular extends JPanel {
         tituloSeccion.setForeground(colorFuente);
         
         
-        String[] nivelTrafico = {"Ninguno", "Bajo", "Medio", "Alto"};
+        String[] nivelTrafico = {"Bajo", "Medio", "Alto"};
         JComboBox<String> selectorTrafico = new JComboBox<String>(nivelTrafico);
         
         listElement.add(tituloSeccion);
