@@ -63,6 +63,11 @@ public class Controller implements ActionListener {
     		vista.getLayoutPrincipal().getFormularioTres().getBotonEnviar().addActionListener(this);
     		vista.getLayoutPrincipal().getFormularioTres().getBotonCancelar().addActionListener(this);    		
     	}
+    	
+    	if (vista.getLayoutPrincipal().getPantallaRespuesta() != null) {
+    		vista.getLayoutPrincipal().getPantallaRespuesta().getBotonInicio().addActionListener(this);   		
+    	}
+    	
 	  }
   
     @Override
@@ -135,6 +140,7 @@ public class Controller implements ActionListener {
 		    				consulta.setTipoCarretera(tipoCarretera);
 		    				consulta.setMaterialCarretera(tipoMaterial);
 		    				consulta.setHumedadSuelo(hSuelo);
+		    				consulta.setCondicionesInicialesVia(condicionesInicialesViaFuzzySystemDAO.getFuzzifiedVariable("condiciones_iniciales_via").replace("_", " "));
 		    				
 		    				vista.getLayoutPrincipal().insertarFormularioDos();
 		    				asignarOyentes();
@@ -160,8 +166,8 @@ public class Controller implements ActionListener {
 						double temperatura = convertToInt(temperaturaAmbiente);
 						double precipitaciones = convertToInt(nivelPrecipitaciones);
 						
-						consulta.setTemperatura(temperatura);
-						consulta.setPrecipitacion(precipitaciones);
+						consulta.setTemperatura((int) temperatura);
+						consulta.setPrecipitacion((int) precipitaciones);
 						
 						if (temperatura >= -5 && temperatura <= 30) {
 							condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("temperatura", temperatura));
@@ -177,9 +183,11 @@ public class Controller implements ActionListener {
 						
 						condicionesAmbientalesFuzzySystemDAO.evaluate();
 						
-						double condicionesAmbientales = condicionesAmbientalesFuzzySystemDAO.getVariable("condiciones_ambientales").getValue();
-					
-		    			mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_ambientales", condicionesAmbientales));						
+						double condicionesAmbientales = condicionesAmbientalesFuzzySystemDAO.getVariable("condiciones_ambientales").getValue();						
+						
+		    			mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_ambientales", condicionesAmbientales));			
+		    			
+		    			consulta.setCondicionesAmbientales(condicionesAmbientalesFuzzySystemDAO.getFuzzifiedVariable("condiciones_ambientales").replace("_", " "));
 						
 						vista.getLayoutPrincipal().insertarFormularioTres();
 						asignarOyentes();						
@@ -247,7 +255,7 @@ public class Controller implements ActionListener {
 			                    					nivelTrafico = 0.1;			                    					
 			                    				}
 			                    				
-			                    				condicionesTraficoFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("nivel_trafico", nivelTrafico));
+			                    				condicionesTraficoFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("nivel_trafico", nivelTrafico));			          
 			                    			}			
 			                    		}	
 			                    	}	
@@ -256,36 +264,39 @@ public class Controller implements ActionListener {
 			            }
 			        }
 			        
-			        
-			        
 			        condicionesTraficoFuzzySystemDAO.evaluate();			        
-			        densidadTraficoValue = condicionesTraficoFuzzySystemDAO.getDefuzzifiedVariable("condiciones_vehiculares").getValue();			        
+			        densidadTraficoValue = condicionesTraficoFuzzySystemDAO.getDefuzzifiedVariable("condiciones_vehiculares").getValue();
 			        mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO(densidadTraficoTerm, densidadTraficoValue));
 			    }
+			    
+			    consulta.setDensidadVehicularDosEjes(mainFuzzySystemDAO.getFuzzifiedVariable("densidad_vehicular_dos_ejes").replace("_", " "));
+			    consulta.setDensidadVehicularTresEjes(mainFuzzySystemDAO.getFuzzifiedVariable("densidad_vehicular_tres_ejes").replace("_", " "));
+			    consulta.setDensidadVehicularCuatroEjes(mainFuzzySystemDAO.getFuzzifiedVariable("densidad_vehicular_cuatro_ejes").replace("_", " "));
+			    consulta.setDensidadVehicularCincoEjes(mainFuzzySystemDAO.getFuzzifiedVariable("densidad_vehicular_cinco_ejes").replace("_", " "));
 			    
 			    // Evaluar en el JavaFuzzy los datos
 			    mainFuzzySystemDAO.evaluate();			    
 			    // Obtener respuesta
-			    double respuestaDefuzzificada = mainFuzzySystemDAO.getDefuzzifiedVariable("riesgo_de_alto_deterioro").getValue();
 			    String respuestaFuzzificada = mainFuzzySystemDAO.getFuzzifiedVariable("riesgo_de_alto_deterioro");
-			    consulta.setResultado(respuestaFuzzificada);
+		        consulta.setResultado(respuestaFuzzificada.replace("_", " "));
 			    
 			    // Insertar panel de respuesta			    
-			    vista.getLayoutPrincipal().insertarPantallaDeRespuesta(respuestaFuzzificada.replace("_", " ").toUpperCase());
+			    vista.getLayoutPrincipal().insertarPantallaDeRespuesta(consulta);
 				asignarOyentes();
 			}
 			
 			break;
 		case "Informacion_proyecto": 
 			// Llevar a pantalla de información de proyecto
-			asignarOyentes();
+			mostrarDialogoSeccionEnConstruccion();
 			break;
 		case "Cancelar":
+			consulta = null;
+			
 			vista.getLayoutPrincipal().insertarPantallaDeInicio();
 			asignarOyentes();
 		default:
-			break;
-			
+			break;			
 		}
 	}
 	
@@ -317,5 +328,17 @@ public class Controller implements ActionListener {
         }
         
         return respuesta;
+    }
+	
+	public void mostrarDialogoSeccionEnConstruccion() {
+        String mensaje = "¡Sección en construcción!\n\nLo sentimos, esta sección aún no está disponible.";
+
+        // Mostrar un mensaje de advertencia como diálogo modal
+        JOptionPane.showMessageDialog(
+                null,                   // Componente padre (null para centro en pantalla)
+                mensaje,                // Mensaje a mostrar
+                "Sección en Construcción", // Título del diálogo
+                JOptionPane.WARNING_MESSAGE   // Icono de advertencia
+        );
     }
 }

@@ -1,107 +1,141 @@
 package co.edu.unbosque.model;
 
 public class Query {
-    
     private String tipoCarretera;
-    
     private String materialCarretera;
-    
     private int humedadSuelo;
-    
-    private String convidionesInicialesVia;
-
-    private double precipitacion;
-    
-    private double temperatura;
-    
-    private double condicionesAmbientales;
-
-    private String traficoCarretera;
-
-    private int tipoVehiculo;
-    
-    
+    private String condicionesInicialesVia;
+    private int precipitacion;
+    private int temperatura;
+    private String condicionesAmbientales;
+    private String densidadVehicularDosEjes;
+    private String densidadVehicularTresEjes;
+    private String densidadVehicularCuatroEjes;
+    private String densidadVehicularCincoEjes;
     private String resultado;
 
-    public Query() {    	
+    // Constructor vacío
+    public Query() {
         this.tipoCarretera = "";
         this.materialCarretera = "";
         this.humedadSuelo = 0;
-        this.traficoCarretera = "";
-        this.tipoVehiculo = 0;
+        this.condicionesInicialesVia = "";
         this.precipitacion = 0;
         this.temperatura = 0;
+        this.condicionesAmbientales = "";
+        this.densidadVehicularDosEjes = "";
+        this.densidadVehicularTresEjes = "";
+        this.densidadVehicularCuatroEjes = "";
+        this.densidadVehicularCincoEjes = "";
+        this.resultado = "";
     }
 
-	public String getTipoCarretera() {
-		return tipoCarretera;
-	}
+    // Getters y setters
+    public String getTipoCarretera() {
+        return tipoCarretera;
+    }
 
-	public void setTipoCarretera(String tipoCarretera) {
-		this.tipoCarretera = tipoCarretera;
-	}
+    public void setTipoCarretera(String tipoCarretera) {
+        this.tipoCarretera = tipoCarretera;
+    }
 
-	public String getMaterialCarretera() {
-		return materialCarretera;
-	}
+    public String getMaterialCarretera() {
+        return materialCarretera;
+    }
 
-	public void setMaterialCarretera(String materialCarretera) {
-		this.materialCarretera = materialCarretera;
-	}
+    public void setMaterialCarretera(String materialCarretera) {
+        this.materialCarretera = materialCarretera;
+    }
 
-	public double getCondicionesAmbientales() {
-		return condicionesAmbientales;
-	}
+    public int getHumedadSuelo() {
+        return humedadSuelo;
+    }
 
-	public void setCondicionesAmbientales(double condicionesAmbientales) {
-		this.condicionesAmbientales = condicionesAmbientales;
-	}
+    public void setHumedadSuelo(int humedadSuelo) {
+        this.humedadSuelo = humedadSuelo;
+    }
 
-	public int getHumedadSuelo() {
-		return humedadSuelo;
-	}
+    public String getCondicionesInicialesVia() {
+        return condicionesInicialesVia;
+    }
 
-	public void setHumedadSuelo(int humedadSuelo) {
-		this.humedadSuelo = humedadSuelo;
-	}
+    public void setCondicionesInicialesVia(String condicionesInicialesVia) {
+        this.condicionesInicialesVia = condicionesInicialesVia;
+    }
 
-	public String getTraficoCarretera() {
-		return traficoCarretera;
-	}
+    public int getPrecipitacion() {
+        return precipitacion;
+    }
 
-	public void setTraficoCarretera(String traficoCarretera) {
-		this.traficoCarretera = traficoCarretera;
-	}
+    public void setPrecipitacion(int precipitacion) {
+        this.precipitacion = precipitacion;
+    }
 
-	public int getTipoVehiculo() {
-		return tipoVehiculo;
-	}
+    public int getTemperatura() {
+        return temperatura;
+    }
 
-	public void setTipoVehiculo(int tipoVehiculo) {
-		this.tipoVehiculo = tipoVehiculo;
-	}
+    public void setTemperatura(int temperatura) {
+        this.temperatura = temperatura;
+    }
 
-	public double getPrecipitacion() {
-		return precipitacion;
-	}
+    public String getCondicionesAmbientales() {
+        return condicionesAmbientales;
+    }
 
-	public void setPrecipitacion(double precipitacion) {
-		this.precipitacion = precipitacion;
-	}
+    public void setCondicionesAmbientales(String condicionesAmbientales) {
+        this.condicionesAmbientales = condicionesAmbientales;
+    }
 
-	public double getTemperatura() {
-		return temperatura;
-	}
+    public String getDensidadVehicularDosEjes() {
+        return densidadVehicularDosEjes;
+    }
 
-	public void setTemperatura(double temperatura) {
-		this.temperatura = temperatura;
-	}
+    public void setDensidadVehicularDosEjes(String densidadVehicularDosEjes) {
+        this.densidadVehicularDosEjes = densidadVehicularDosEjes;
+    }
 
-	public String getResultado() {
-		return resultado;
-	}
+    public String getDensidadVehicularTresEjes() {
+        return densidadVehicularTresEjes;
+    }
 
-	public void setResultado(String resultado) {
-		this.resultado = resultado;
+    public void setDensidadVehicularTresEjes(String densidadVehicularTresEjes) {
+        this.densidadVehicularTresEjes = densidadVehicularTresEjes;
+    }
+
+    public String getDensidadVehicularCuatroEjes() {
+        return densidadVehicularCuatroEjes;
+    }
+
+    public void setDensidadVehicularCuatroEjes(String densidadVehicularCuatroEjes) {
+        this.densidadVehicularCuatroEjes = densidadVehicularCuatroEjes;
+    }
+    
+    public String getDensidadVehicularCincoEjes() {
+        return densidadVehicularCincoEjes;
+    }
+
+    public void setDensidadVehicularCincoEjes(String densidadVehicularCincoEjes) {
+        this.densidadVehicularCincoEjes = densidadVehicularCincoEjes;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public void setResultado(String resultado) {
+        this.resultado = resultado;
+    }
+
+	@Override
+	public String toString() {
+		return "Query [tipoCarretera=" + tipoCarretera + ", materialCarretera=" + materialCarretera + ", humedadSuelo="
+				+ humedadSuelo + ", condicionesInicialesVia=" + condicionesInicialesVia + ", precipitacion="
+				+ precipitacion + ", temperatura=" + temperatura + ", condicionesAmbientales=" + condicionesAmbientales
+				+ ", densidadVehicularDosEjes=" + densidadVehicularDosEjes + ", densidadVehicularTresEjes="
+				+ densidadVehicularTresEjes + ", densidadVehicularCuatroEjes=" + densidadVehicularCuatroEjes
+				+ ", densidadVehicularCincoEjes=" + densidadVehicularCincoEjes + ", resultado=" + resultado + "]";
 	}
+    
+    
 }

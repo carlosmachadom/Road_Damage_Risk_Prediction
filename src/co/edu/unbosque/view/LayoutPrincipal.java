@@ -8,6 +8,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
+import co.edu.unbosque.model.Query;
+
 /**
  * Clase layout que va a contener todas las pantallas
  */
@@ -80,12 +82,12 @@ public class LayoutPrincipal extends JPanel{
 		repintarRevalidarPanel();
 	}
 	
-	public void insertarPantallaDeRespuesta(String respuesta) {
+	public void insertarPantallaDeRespuesta(Query consulta) {
 		removerPaneles();
 		repintarRevalidarPanel();
 		
 		// Agregar pantalla de respuesta
-		pantallaRespuesta = new Resultado(respuesta);
+		pantallaRespuesta = new Resultado(consulta);
 		add(pantallaRespuesta);
 		
 		repintarRevalidarPanel();
