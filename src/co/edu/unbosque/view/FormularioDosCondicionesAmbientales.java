@@ -125,7 +125,7 @@ public class FormularioDosCondicionesAmbientales extends JPanel{
 		JPanel contenedorCampoUno = new JPanel();
 		contenedorCampoUno.setLayout(new GridLayout(2, 1, 10, 10));
 		contenedorCampoUno.setBackground(new Color(0,0,0,0));
-        JLabel tituloCampoUno = new JLabel("Temperatura promedio");
+        JLabel tituloCampoUno = new JLabel("Temperatura (-5°C - 30°C)");
         tituloCampoUno.setFont(fuente);
         tituloCampoUno.setForeground(colorFuente);
         temperaturaAmbiente = new JTextField();
@@ -137,7 +137,7 @@ public class FormularioDosCondicionesAmbientales extends JPanel{
 		JPanel contenedorCampoDos = new JPanel();
 		contenedorCampoDos.setLayout(new GridLayout(2, 1, 10, 10));
 		contenedorCampoDos.setBackground(new Color(0,0,0,0));
-		JLabel tituloCampoDos = new JLabel("Nivel promedio precipitaciones");
+		JLabel tituloCampoDos = new JLabel("Precipitaciones (0mm - 300mm)");
 		tituloCampoDos.setFont(fuente);
 		tituloCampoDos.setForeground(colorFuente);
         nivelPrecipitaciones = new JTextField();

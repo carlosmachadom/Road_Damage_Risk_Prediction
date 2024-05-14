@@ -162,7 +162,7 @@ public class FormularioUnoTipoCarretera extends JPanel {
         JPanel contenedorCampoTres = new JPanel();
         contenedorCampoTres.setLayout(new GridLayout(2, 1, 10, 10));
         contenedorCampoTres.setBackground(new Color(0,0,0,0));
-		JLabel tituloCampoTres = new JLabel("Porcentaje humedad suelo");
+		JLabel tituloCampoTres = new JLabel("Humedad suelo (0% - 100%)");
 		tituloCampoTres.setFont(fuente);
 		tituloCampoTres.setForeground(colorFuente);
         humedadSuelo = new JTextField();
