@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import co.edu.unbosque.view.VistaVentana;
 import co.edu.unbosque.DAO.FuzzyVariablesDAO;
 import co.edu.unbosque.DTO.FuzzyInputDTO;
+import co.edu.unbosque.model.Query;
 
 public class Controller implements ActionListener {
     
@@ -20,7 +21,9 @@ public class Controller implements ActionListener {
     private final FuzzyVariablesDAO mainFuzzySystemDAO;    
     private final FuzzyVariablesDAO condicionesInicialesViaFuzzySystemDAO;    
     private final FuzzyVariablesDAO condicionesAmbientalesFuzzySystemDAO;    
-    private final FuzzyVariablesDAO condicionesTraficoFuzzySystemDAO;    
+    private final FuzzyVariablesDAO condicionesTraficoFuzzySystemDAO;  
+    
+    private Query consulta;
 
     public Controller() {
         mainFuzzySystemDAO = new FuzzyVariablesDAO();
@@ -72,6 +75,7 @@ public class Controller implements ActionListener {
 	public void validarAccion(String command) {
 		switch (command) {
 		case "inicia_diagnostico":
+			consulta = new Query();
 			vista.getLayoutPrincipal().insertarFormularioUno();	
 			asignarOyentes();
 			break;
@@ -125,7 +129,12 @@ public class Controller implements ActionListener {
 		    				condicionesInicialesViaFuzzySystemDAO.evaluate();
 		    				
 		    				double condicionesVia = condicionesInicialesViaFuzzySystemDAO.getVariable("condiciones_iniciales_via").getValue();
+		    				
 		    				mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_iniciales_via", condicionesVia));
+		    				
+		    				consulta.setTipoCarretera(tipoCarretera);
+		    				consulta.setMaterialCarretera(tipoMaterial);
+		    				consulta.setHumedadSuelo(hSuelo);
 		    				
 		    				vista.getLayoutPrincipal().insertarFormularioDos();
 		    				asignarOyentes();
@@ -151,6 +160,9 @@ public class Controller implements ActionListener {
 						double temperatura = convertToInt(temperaturaAmbiente);
 						double precipitaciones = convertToInt(nivelPrecipitaciones);
 						
+						consulta.setTemperatura(temperatura);
+						consulta.setPrecipitacion(precipitaciones);
+						
 						if (temperatura >= -5 && temperatura <= 30) {
 							condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("temperatura", temperatura));
 						} else {
@@ -161,11 +173,12 @@ public class Controller implements ActionListener {
 							condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("precipitacion", precipitaciones));							
 						} else {
 							JOptionPane.showMessageDialog(null, "Error: Temperatura fuera de rango, esta debe estar entre 0 y 300 mm.", "Error de input", JOptionPane.ERROR_MESSAGE);
-						}						
+						}		
 						
 						condicionesAmbientalesFuzzySystemDAO.evaluate();
 						
 						double condicionesAmbientales = condicionesAmbientalesFuzzySystemDAO.getVariable("condiciones_ambientales").getValue();
+					
 		    			mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_ambientales", condicionesAmbientales));						
 						
 						vista.getLayoutPrincipal().insertarFormularioTres();
@@ -203,11 +216,6 @@ public class Controller implements ActionListener {
 			                    			if (c instanceof JLabel) {
 			                    				JLabel tituloSeccion = (JLabel) c;
 			                    				String vehiculoActual = tituloSeccion.getText();
-			                    				
-			                    				//TERM dos_ejes := 0.05;
-			                    			    //TERM tres_ejes := 0.15;
-			                    			    //TERM cuatro_ejes := 0.35;
-			                    			    //TERM cinco_ejes := 0.45;
 			                    				
 			                    				if (vehiculoActual.contains("2")) {
 			                    					tipoVehiculo = 0.05;
@@ -248,6 +256,8 @@ public class Controller implements ActionListener {
 			            }
 			        }
 			        
+			        
+			        
 			        condicionesTraficoFuzzySystemDAO.evaluate();			        
 			        densidadTraficoValue = condicionesTraficoFuzzySystemDAO.getDefuzzifiedVariable("condiciones_vehiculares").getValue();			        
 			        mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO(densidadTraficoTerm, densidadTraficoValue));
@@ -258,9 +268,11 @@ public class Controller implements ActionListener {
 			    // Obtener respuesta
 			    double respuestaDefuzzificada = mainFuzzySystemDAO.getDefuzzifiedVariable("riesgo_de_alto_deterioro").getValue();
 			    String respuestaFuzzificada = mainFuzzySystemDAO.getFuzzifiedVariable("riesgo_de_alto_deterioro");
+			    consulta.setResultado(respuestaFuzzificada);
 			    
-			    System.out.println("riesgo_de_alto_deterioro" + ": " + respuestaFuzzificada);
 			    // Insertar panel de respuesta			    
+			    vista.getLayoutPrincipal().insertarPantallaDeRespuesta(respuestaFuzzificada.replace("_", " ").toUpperCase());
+				asignarOyentes();
 			}
 			
 			break;
@@ -269,8 +281,8 @@ public class Controller implements ActionListener {
 			asignarOyentes();
 			break;
 		case "Cancelar":
-			// LLevar a pagina de inicio 
-			// Reiniciar objeto de consulta
+			vista.getLayoutPrincipal().insertarPantallaDeInicio();
+			asignarOyentes();
 		default:
 			break;
 			

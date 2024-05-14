@@ -80,11 +80,13 @@ public class LayoutPrincipal extends JPanel{
 		repintarRevalidarPanel();
 	}
 	
-	public void insertarPantallaDeRespuesta() {
+	public void insertarPantallaDeRespuesta(String respuesta) {
 		removerPaneles();
 		repintarRevalidarPanel();
 		
 		// Agregar pantalla de respuesta
+		pantallaRespuesta = new Resultado(respuesta);
+		add(pantallaRespuesta);
 		
 		repintarRevalidarPanel();
 	}

@@ -6,17 +6,20 @@ public class Query {
     
     private String materialCarretera;
     
-    private double condicionesAmbientales;
-
     private int humedadSuelo;
+    
+    private String convidionesInicialesVia;
+
+    private double precipitacion;
+    
+    private double temperatura;
+    
+    private double condicionesAmbientales;
 
     private String traficoCarretera;
 
     private int tipoVehiculo;
     
-    private double precipitacion;
-    
-    private double temperatura;
     
     private String resultado;
 

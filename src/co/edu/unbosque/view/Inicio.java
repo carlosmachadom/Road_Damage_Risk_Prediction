@@ -73,7 +73,7 @@ public class Inicio extends JPanel {
         tituloH1.setFont(fontTitulo);
         tituloH1.setBorder(margenTitulo);
 
-        JLabel subTitulo = new JLabel("<html>Sistema difuso para  Predecir niveles de <br>daño en Carreteras de <span color='#F2613F'>Colombia</span><html>");
+        JLabel subTitulo = new JLabel("<html>Sistema difuso para  Predecir niveles de <br>daño en vías de <span color='#F2613F'>Bogotá D.C</span><html>");
         Color colorSubTitulo = new Color(252, 255, 218);
         Font fontSubTitulo = new Font("Arial", Font.BOLD, 32);
         Border margenSubTitulo = BorderFactory.createEmptyBorder(0, 40, 40, 40);

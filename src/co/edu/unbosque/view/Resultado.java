@@ -3,6 +3,7 @@ package co.edu.unbosque.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 
@@ -70,8 +71,21 @@ public class Resultado extends JPanel{
 		
 		insertarTitulo();
 		
-		JLabel rta = new JLabel(respuesta);
+		JPanel contenedorRespuesta = new JPanel();
+		contenedorRespuesta.setLayout(new FlowLayout(FlowLayout.LEADING));
+		contenedorRespuesta.setBorder(new EmptyBorder(0,40,0,40));
+		contenedorRespuesta.setBackground(new Color(0,0,0,0));
 		
+		Font fuente = new Font("Arial", Font.BOLD, 32);
+		Color colorFuente = new Color(252, 255, 218);
+		
+		JLabel rta = new JLabel(respuesta);
+		rta.setFont(fuente);
+    	rta.setForeground(colorFuente);	
+		
+		contenedorRespuesta.add(rta);		
+		
+		contenidoRespuesta.add(contenedorRespuesta);		
 		
 		add(contenidoRespuesta, BorderLayout.CENTER);
 	}
