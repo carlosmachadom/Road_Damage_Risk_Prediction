@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -156,7 +157,7 @@ public class Inicio extends JPanel {
      */
     @Override
     public void paint(Graphics g) {
-        ImageIcon imagenFondo = new ImageIcon("src\\images\\Fondo_inicio.png");
+        ImageIcon imagenFondo = new ImageIcon("images" + File.separator + "Fondo_inicio.png");
         g.drawImage(imagenFondo.getImage(), 0, 0, getWidth(), getHeight(), this); // Dibuja la imagen de fondo
 
         setOpaque(false); // Hace el panel transparente

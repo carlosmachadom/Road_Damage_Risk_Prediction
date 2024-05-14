@@ -8,6 +8,7 @@ package co.edu.unbosque.view;
  */
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -35,7 +36,7 @@ public class VistaVentana extends JFrame {
         getContentPane().setLayout(new BorderLayout()); // Establece el layout principal como BorderLayout
         setMinimumSize(new Dimension(1440, 960)); // Establece el tamaño mínimo de la ventana
         setMaximumSize(new Dimension(1440, 960)); // Establece el tamaño mínimo de la ventana
-        ImageIcon favicon = new ImageIcon("src\\images\\Paviment_forecast.png");
+        ImageIcon favicon = new ImageIcon("images" + File.separator + "Paviment_forecast.png");
         setIconImage(favicon.getImage());
         
         inicializarComponentes(); // Inicializa y configura los componentes de la ventana

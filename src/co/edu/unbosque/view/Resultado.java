@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -248,7 +249,7 @@ public class Resultado extends JPanel {
 	
 	@Override
     public void paint(Graphics g) {
-        ImageIcon imagenFondo = new ImageIcon("src\\images\\Fondo_resultado.png");
+        ImageIcon imagenFondo = new ImageIcon("images" + File.separator + "Fondo_resultado.png");
         g.drawImage(imagenFondo.getImage(), 0, 0, getWidth(), getHeight(), this); // Dibuja la imagen de fondo
 
         setOpaque(false); // Hace el panel transparente
