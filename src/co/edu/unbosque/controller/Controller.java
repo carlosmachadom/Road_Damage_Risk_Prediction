@@ -166,31 +166,33 @@ public class Controller implements ActionListener {
 						double temperatura = convertToInt(temperaturaAmbiente);
 						double precipitaciones = convertToInt(nivelPrecipitaciones);
 						
+						
 						consulta.setTemperatura((int) temperatura);
 						consulta.setPrecipitacion((int) precipitaciones);
 						
 						if (temperatura >= -5 && temperatura <= 30) {
 							condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("temperatura", temperatura));
+							if (precipitaciones >= 0 && precipitaciones <= 300) {
+								condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("precipitacion", precipitaciones));							
+
+								condicionesAmbientalesFuzzySystemDAO.evaluate();
+								
+								double condicionesAmbientales = condicionesAmbientalesFuzzySystemDAO.getVariable("condiciones_ambientales").getValue();						
+								
+								mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_ambientales", condicionesAmbientales));			
+								
+								consulta.setCondicionesAmbientales(condicionesAmbientalesFuzzySystemDAO.getFuzzifiedVariable("condiciones_ambientales").replace("_", " "));
+								
+								vista.getLayoutPrincipal().insertarFormularioTres();
+								asignarOyentes();			
+							} else {
+								JOptionPane.showMessageDialog(null, "Error: Temperatura fuera de rango, esta debe estar entre 0 y 300 mm.", "Error de input", JOptionPane.ERROR_MESSAGE);
+							}		
 						} else {
 							JOptionPane.showMessageDialog(null, "Error: Temperatura fuera de rango, esta debe estar entre -5 y 30 grados.", "Error de input", JOptionPane.ERROR_MESSAGE);
 						}
 						
-						if (precipitaciones >= 0 && precipitaciones <= 300) {
-							condicionesAmbientalesFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("precipitacion", precipitaciones));							
-						} else {
-							JOptionPane.showMessageDialog(null, "Error: Temperatura fuera de rango, esta debe estar entre 0 y 300 mm.", "Error de input", JOptionPane.ERROR_MESSAGE);
-						}		
 						
-						condicionesAmbientalesFuzzySystemDAO.evaluate();
-						
-						double condicionesAmbientales = condicionesAmbientalesFuzzySystemDAO.getVariable("condiciones_ambientales").getValue();						
-						
-		    			mainFuzzySystemDAO.putFuzzifiedVariable(new FuzzyInputDTO("condiciones_ambientales", condicionesAmbientales));			
-		    			
-		    			consulta.setCondicionesAmbientales(condicionesAmbientalesFuzzySystemDAO.getFuzzifiedVariable("condiciones_ambientales").replace("_", " "));
-						
-						vista.getLayoutPrincipal().insertarFormularioTres();
-						asignarOyentes();						
 					} else {
 						JOptionPane.showMessageDialog(null, "Error: Debes ingresar información.", "Sin datos", JOptionPane.ERROR_MESSAGE);
 					}

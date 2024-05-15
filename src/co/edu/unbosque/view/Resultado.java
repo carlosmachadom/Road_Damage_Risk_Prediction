@@ -191,7 +191,7 @@ public class Resultado extends JPanel {
     	
     	Font fuente2 = new Font("Arial", Font.BOLD, 24);
 		Color colorFuente2 = new Color(252, 255, 218);
-    	JLabel subtitulo = new JLabel("El nivel de riesgo de la carretera a sufrir un deterioro alto es:");
+    	JLabel subtitulo = new JLabel("Riesgo de Deterioro Vial:");
     	subtitulo.setFont(fuente2);
     	subtitulo.setForeground(colorFuente2);
     	subtitulo.setBorder(BorderFactory.createEmptyBorder(0, 40, 20, 40));
